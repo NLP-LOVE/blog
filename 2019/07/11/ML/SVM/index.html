@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>【机器学习】支持向量机(SVM) | mantch的博客</title>
+  
+  
+
+  
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- meta -->
+  
+
+  <!-- link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.10.1/css/all.min.css">
+  
+
+  
+  <link rel="shortcut icon" type='image/x-icon' href="https://gitee.com/kkweishe/images/raw/master/ML/2019-12-24_15-43-44.png">
+  
+
+  
+    
+<link rel="stylesheet" href="/style.css">
+
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+
+  
+  
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  
+  
+  <div class="cover-wrapper">
+    <cover class='cover post half'>
+      
+        
+  <h1 class='title'>mantch</h1>
+
+
+  <div class="m_search">
+    <form name="searchform" class="form u-search-form">
+      <input type="text" class="input u-search-input" placeholder="" />
+      <i class="icon fas fa-search fa-fw"></i>
+    </form>
+  </div>
+
+<div class='menu navgation'>
+  <ul class='h-list'>
+    
+      
+        <li>
+          <a class="nav home" href="/"
+            
+            
+            id="home">
+            <i class='fas fa-rss fa-fw'></i>&nbsp;博文
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/categories/"
+            
+            
+            id="categories">
+            <i class='fas fa-folder-open fa-fw'></i>&nbsp;分类
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/projects/mantch/"
+            
+            
+            id="projectsmantch">
+            <i class='fas fa-code-branch fa-fw'></i>&nbsp;项目&amp;资源
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/about/mantch/"
+            
+              rel="nofollow"
+            
+            
+            id="aboutmantch">
+            <i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+          </a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+      
+    </cover>
+    <header class="l_header pure">
+  <div id="loading-bar-wrapper">
+    <div id="loading-bar" class="pure"></div>
+  </div>
+
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+      <a class="logo flat-box" href='/' >
+        
+          mantch的博客
+        
+      </a>
+			<div class='menu navgation'>
+				<ul class='h-list'>
+          
+  					
+  						<li>
+								<a class="nav flat-box" href="/categories/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="categories">
+									<i class='fas fa-folder-open fa-fw'></i>&nbsp;分类
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/tags/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="tags">
+									<i class='fas fa-hashtag fa-fw'></i>&nbsp;标签
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/archives/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="archives">
+									<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+								</a>
+							</li>
+      			
+      		
+				</ul>
+			</div>
+
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="搜索" />
+						<i class="icon fas fa-search fa-fw"></i>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a class="fas fa-search fa-fw" href='javascript:void(0)'></a></li>
+				
+				<li class='s-menu'><a class="fas fa-bars fa-fw" href='javascript:void(0)'></a></li>
+			</ul>
+		</div>
+
+		<div class='nav-sub container container--flex'>
+			<a class="logo flat-box"></a>
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a class="flat-btn fas fa-comments fa-fw" href='javascript:void(0)'></a></li>
+        
+          <li class='s-toc'><a class="flat-btn fas fa-list fa-fw" href='javascript:void(0)'></a></li>
+        
+			</ul>
+		</div>
+	</div>
+</header>
+	<aside class="menu-phone">
+    <header>
+		<nav class="menu navgation">
+      <ul>
+        
+          
+            <li>
+							<a class="nav flat-box" href="/"
+                
+                
+                id="home">
+								<i class='fas fa-clock fa-fw'></i>&nbsp;近期文章
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/archives/"
+                
+                  rel="nofollow"
+                
+                
+                id="archives">
+								<i class='fas fa-archive fa-fw'></i>&nbsp;文章归档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/projects/mantch/"
+                
+                
+                id="projectsmantch">
+								<i class='fas fa-code-branch fa-fw'></i>&nbsp;项目&amp;资源
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/friends/"
+                
+                  rel="nofollow"
+                
+                
+                id="friends">
+								<i class='fas fa-link fa-fw'></i>&nbsp;我的友链
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="https://xaoxuu.com/wiki/material-x/"
+                
+                  rel="nofollow"
+                
+                
+                id="https:xaoxuu.comwikimaterial-x">
+								<i class='fas fa-book fa-fw'></i>&nbsp;主题文档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/about/mantch/"
+                
+                  rel="nofollow"
+                
+                
+                id="aboutmantch">
+								<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于小站
+							</a>
+            </li>
+          
+       
+      </ul>
+		</nav>
+    </header>
+	</aside>
+<script>setLoadingBarProgress(40);</script>
+
+  </div>
+
+
+  <div class="l_body">
+    <div class='body-wrapper'>
+      <div class='l_main'>
+  
+
+  <article id="post" class="post white-box article-type-post" itemscope itemprop="blogPost">
+    
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  
+    <h1 class="title">
+      <a href="/2019/07/11/ML/SVM/">
+        【机器学习】支持向量机(SVM)
+      </a>
+    </h1>
+  
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+  <div class='new-meta-item author'>
+    
+      <a href="http://reverent-montalcini-17e4bf.netlify.com" rel="nofollow">
+        
+          <img src="https://gitee.com/kkweishe/images/raw/master/ML/2019-12-24_15-51-11.png">
+        
+        <p>mantch</p>
+      </a>
+    
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+    <p>2019-07-11</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>机器学习</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            
+  
+    <div class="new-meta-item browse busuanzi">
+      <a class='notlink'>
+        <i class="fas fa-eye" aria-hidden="true"></i>
+        <p>
+          <span id="busuanzi_value_page_pv">
+            <i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
+          </span>
+        </p>
+      </a>
+    </div>
+  
+
+
+          
+        
+          
+            
+  
+    <div class="new-meta-item wordcount">
+      <a class='notlink'>
+        <i class="fas fa-keyboard" aria-hidden="true"></i>
+        <p>字数统计:</p>
+        <p>4.9k字</p>
+      </a>
+    </div>
+    <div class="new-meta-item readtime">
+      <a class='notlink'>
+        <i class="fas fa-hourglass-half" aria-hidden="true"></i>
+        <p>阅读时长≈</p>
+        <p>17分</p>
+      </a>
+    </div>
+  
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+    <section class="article typo">
+      <div class="article-entry" itemprop="articleBody">
+        <p>1.1 一个关于SVM的童话故事 支持向量机（Support Vector Machine，SVM）是众多监督学习方法中十分出色的一种，几乎所有讲述经典机器学习方法的教材都会介绍。关于SVM，流传着一个关于天使与魔鬼的故事。 传说魔鬼和天使玩了一个游戏，魔鬼在桌上放了两种颜色的球。魔鬼让天使用一根…</p>
+<a id="more"></a>
+
+<h2 id="1-讲讲SVM"><a href="#1-讲讲SVM" class="headerlink" title="1. 讲讲SVM"></a>1. 讲讲SVM</h2><h3 id="1-1-一个关于SVM的童话故事"><a href="#1-1-一个关于SVM的童话故事" class="headerlink" title="1.1 一个关于SVM的童话故事"></a>1.1 一个关于SVM的童话故事</h3><p>支持向量机（Support Vector Machine，SVM）是众多监督学习方法中十分出色的一种，几乎所有讲述经典机器学习方法的教材都会介绍。关于SVM，流传着一个关于天使与魔鬼的故事。</p>
+<p>传说魔鬼和天使玩了一个游戏，魔鬼在桌上放了两种颜色的球。魔鬼让天使用一根木棍将它们分开。这对天使来说，似乎太容易了。天使不假思索地一摆，便完成了任务。魔鬼又加入了更多的球。随着球的增多，似乎有的球不能再被原来的木棍正确分开，如下图所示。 </p>
+<p><img src="http://wx4.sinaimg.cn/mw690/00630Defgy1g4vn6ow8vtj30i40ddgpt.jpg" alt=""></p>
+<p>SVM实际上是在为天使找到木棒的最佳放置位置，使得两边的球都离分隔它们的木棒足够远。依照SVM为天使选择的木棒位置，魔鬼即使按刚才的方式继续加入新球，木棒也能很好地将两类不同的球分开。</p>
+<p>看到天使已经很好地解决了用木棒线性分球的问题，魔鬼又给了天使一个新的挑战，如下图所示。</p>
+<p><img src="http://wx4.sinaimg.cn/mw690/00630Defgy1g4vn9xl3pcj30iy0dswgr.jpg" alt=""></p>
+<p>按照这种球的摆法，世界上貌似没有一根木棒可以将它们 完美分开。但天使毕竟有法力，他一拍桌子，便让这些球飞到了空中，然后凭借 念力抓起一张纸片，插在了两类球的中间。从魔鬼的角度看这些 球，则像是被一条曲线完美的切开了。</p>
+<p><img src="http://wx2.sinaimg.cn/mw690/00630Defgy1g4vnbaltf7j30mo0ar77n.jpg" alt=""></p>
+<p>后来，“无聊”的科学家们把这些球称为“数据”，把木棍称为“分类面”，找到最 大间隔的木棒位置的过程称为“优化”，拍桌子让球飞到空中的念力叫“核映射”，在 空中分隔球的纸片称为“分类超平面”。这便是SVM的童话故事。</p>
+<h3 id="1-2-理解SVM：第一层"><a href="#1-2-理解SVM：第一层" class="headerlink" title="1.2 理解SVM：第一层"></a>1.2 理解SVM：第一层</h3><p>支持向量机，因其英文名为support vector machine，故一般简称SVM，通俗来讲，它是一种二类分类模型，其基本模型定义为特征空间上的间隔最大的线性分类器，其学习策略便是间隔最大化，最终可转化为一个凸二次规划问题的求解。</p>
+<p><strong>线性分类器：</strong>给定一些数据点，它们分别属于两个不同的类，现在要找到一个线性分类器把这些数据分成两类。如果用x表示数据点，用y表示类别（y可以取1或者0，分别代表两个不同的类），一个线性分类器的学习目标便是要在n维的数据空间中找到一个超平面（hyper plane），这个超平面的方程可以表示为（ wT中的T代表转置）：</p>
+<p>$$w^Tx+b=0$$</p>
+<p>这里可以查看我之前的逻辑回归章节回顾：<a href="https://github.com/NLP-LOVE/ML-NLP/blob/master/Machine%20Learning/2.Logistics%20Regression/2.Logistics%20Regression.md" target="_blank" rel="noopener">点击打开</a></p>
+<p>这个超平面可以用分类函数 $f(x)=w^Tx+b$ 表示，当f(x) 等于0的时候，x便是位于超平面上的点，而f(x)大于0的点对应 y=1 的数据点，f(x)小于0的点对应y=-1的点，如下图所示：</p>
+<p><img src="http://wx4.sinaimg.cn/mw690/00630Defly1g4w7oendezj30gz0aojrq.jpg" alt=""></p>
+<h4 id="1-2-1-函数间隔与几何间隔"><a href="#1-2-1-函数间隔与几何间隔" class="headerlink" title="1.2.1 函数间隔与几何间隔"></a>1.2.1 函数间隔与几何间隔</h4><p>在超平面w<em>x+b=0确定的情况下，|w<em>x+b|能够表示点x到距离超平面的远近，而通过观察w</em>x+b的符号与类标记y的符号是否一致可判断分类是否正确，所以，可以用(y</em>(w<em>x+b))的正负性来判定或表示分类的正确性。于此，我们便引出了*</em>函数间隔**（functional margin）的概念。</p>
+<p>函数间隔公式：$$\gamma=y(w^Tx+b)=yf(x)$$</p>
+<p>而超平面(w，b)关于数据集T中所有样本点(xi，yi)的函数间隔最小值（其中，x是特征，y是结果标签，i表示第i个样本），便为超平面(w, b)关于训练数据集T的函数间隔：</p>
+<p>$$\gamma=min\gamma i(i=1,…n)$$</p>
+<p>但这样定义的函数间隔有问题，即如果成比例的改变w和b（如将它们改成2w和2b），则函数间隔的值f(x)却变成了原来的2倍（虽然此时超平面没有改变），所以只有函数间隔还远远不够。</p>
+<p><strong>几何间隔</strong></p>
+<p>事实上，我们可以对法向量w加些约束条件，从而引出真正定义点到超平面的距离–几何间隔（geometrical margin）的概念。假定对于一个点 x ，令其垂直投影到超平面上的对应点为 x0 ，w 是垂直于超平面的一个向量，$\gamma$为样本x到超平面的距离，如下图所示：</p>
+<p><img src="https://julyedu-img.oss-cn-beijing.aliyuncs.com/quesbase64153146493788072777.png" alt=""></p>
+<p>这里我直接给出几何间隔的公式，详细推到请查看博文：<a href="https://blog.csdn.net/v_july_v/article/details/7624837" target="_blank" rel="noopener">点击进入</a></p>
+<p>几何间隔：$\gamma^{‘}=\frac{\gamma}{||w||}$</p>
+<p>从上述函数间隔和几何间隔的定义可以看出：几何间隔就是<strong>函数间隔除以||w||</strong>，而且函数间隔y<em>(wx+b) = y</em>f(x)实际上就是|f(x)|，只是人为定义的一个间隔度量，而几何间隔|f(x)|/||w||才是直观上的点到超平面的距离。</p>
+<h4 id="1-2-2-最大间隔分类器的定义"><a href="#1-2-2-最大间隔分类器的定义" class="headerlink" title="1.2.2 最大间隔分类器的定义"></a>1.2.2 最大间隔分类器的定义</h4><p>对一个数据点进行分类，当超平面离数据点的“间隔”越大，分类的确信度（confidence）也越大。所以，为了使得分类的确信度尽量高，需要让所选择的超平面能够最大化这个“间隔”值。这个间隔就是下图中的Gap的一半。</p>
+<p><img src="http://wx4.sinaimg.cn/mw690/00630Defly1g4w7q9cnymj30dt09mglu.jpg" alt=""></p>
+<p>通过由前面的分析可知：函数间隔不适合用来最大化间隔值，因为在超平面固定以后，可以等比例地缩放w的长度和b的值，这样可以使得 $f(x)=w^Tx+b$ 的值任意大，亦即函数间隔可以在超平面保持不变的情况下被取得任意大。但几何间隔因为除上了，<strong>使得在缩放w和b的时候几何间隔的值是不会改变的</strong>，它只随着超平面的变动而变动，因此，这是更加合适的一个间隔。换言之，这里要找的最大间隔分类超平面中的<strong>“间隔”指的是几何间隔。</strong></p>
+<p>如下图所示，中间的实线便是寻找到的最优超平面（Optimal Hyper Plane），其到两条虚线边界的距离相等，这个距离便是几何间隔，两条虚线间隔边界之间的距离等于2倍几何间隔，而虚线间隔边界上的点则是支持向量。由于这些支持向量刚好在虚线间隔边界上，所以它们满足$y(w_Tx+b)=1$，对于所有不是支持向量的点，则显然有$y(w_Tx+b)&gt;1$。</p>
+<p><img src="http://wx2.sinaimg.cn/mw690/00630Defly1g4w7r9zvunj30o60hdaar.jpg" alt=""></p>
+<p>OK，到此为止，算是了解到了SVM的第一层，对于那些只关心怎么用SVM的朋友便已足够，不必再更进一层深究其更深的原理。</p>
+<h4 id="1-2-3-最大间隔损失函数Hinge-loss"><a href="#1-2-3-最大间隔损失函数Hinge-loss" class="headerlink" title="1.2.3 最大间隔损失函数Hinge loss"></a>1.2.3 最大间隔损失函数Hinge loss</h4><p>SVM 求解使通过建立二次规划原始问题，引入拉格朗日乘子法，然后转换成对偶的形式去求解，这是一种理论非常充实的解法。这里换一种角度来思考，在机器学习领域，一般的做法是经验风险最小化 （empirical risk minimization,ERM），即构建假设函数（Hypothesis）为输入输出间的映射，然后采用损失函数来衡量模型的优劣。求得使损失最小化的模型即为最优的假设函数，采用不同的损失函数也会得到不同的机器学习算法。SVM采用的就是Hinge Loss，用于“最大间隔(max-margin)”分类。</p>
+<p>$$L_i=\sum_{j\neq t_i}max(0,f(x_i,W)<em>j-(f(x_i,W)</em>{y_i}-\bigtriangleup))$$</p>
+<ul>
+<li>对于训练集中的第i个数据xi</li>
+<li>在W下会有一个得分结果向量f(xi,W)</li>
+<li>第j类的得分为我们记作f(xi,W)j </li>
+</ul>
+<p>要理解这个公式，首先先看下面这张图片：</p>
+<p><img src="http://wx1.sinaimg.cn/mw690/00630Defly1g4w5ezjr64j30se03pmy6.jpg" alt=""></p>
+<ol>
+<li>在生活中我们都会认为没有威胁的才是最好的，比如拿成绩来说，自己考了第一名99分，而第二名紧随其后98分，那么就会有不安全的感觉，就会认为那家伙随时都有可能超过我。如果第二名是85分，那就会感觉安全多了，第二名需要花费很大的力气才能赶上自己。拿这个例子套到上面这幅图也是一样的。</li>
+<li>上面这幅图delta左边的红点是一个<strong>安全警戒线</strong>，什么意思呢？也就是说<strong>预测错误得分</strong>超过这个安全警戒线就会得到一个惩罚权重，让这个预测错误值退回到安全警戒线以外，这样才能够保证预测正确的结果具有唯一性。</li>
+<li>对应到公式中，$f(x_i,W)_j$ 就是错误分类的得分。后面一项就是 <strong>正确得分 - delta = 安全警戒线值</strong>，两项的差代表的就是惩罚权重，越接近正确得分，权重越大。当错误得分在警戒线以外时，两项相减得到负数，那么损失函数的最大值是0，也就是没有损失。</li>
+<li>一直往复循环训练数据，直到最小化损失函数为止，也就找到了分类超平面。</li>
+</ol>
+<h3 id="1-3-深入SVM：第二层"><a href="#1-3-深入SVM：第二层" class="headerlink" title="1.3 深入SVM：第二层"></a>1.3 深入SVM：第二层</h3><h4 id="1-3-1-从线性可分到线性不可分"><a href="#1-3-1-从线性可分到线性不可分" class="headerlink" title="1.3.1 从线性可分到线性不可分"></a>1.3.1 从线性可分到线性不可分</h4><p>接着考虑之前得到的目标函数(令函数间隔=1)：</p>
+<p>$$max\frac{1}{||w||}s.t.,y_i(w^Tx_i+b)\ge1,i=1,…,n$$</p>
+<p><strong>转换为对偶问题</strong>，解释一下什么是对偶问题，对偶问题是实质相同但从不同角度提出不同提法的一对问题。</p>
+<p>由于求 $\frac{1}{||w||}$ 的最大值相当于求 $\frac{1}{2}||w||^2$ 的最小值，所以上述目标函数等价于（w由分母变成分子，从而也有原来的max问题变为min问题，很明显，两者问题等价）：</p>
+<p>$$min\frac{1}{2}||w||^2s.t.,y_i(w^Tx_i+b)\ge1,i=1,…,n$$</p>
+<p>因为现在的目标函数是二次的，约束条件是线性的，所以它是一个凸二次规划问题。这个问题可以用现成的QP (Quadratic Programming) 优化包进行求解。一言以蔽之：在一定的约束条件下，目标最优，损失最小。</p>
+<p>此外，由于这个问题的特殊结构，还可以通过拉格朗日对偶性（Lagrange Duality）变换到对偶变量 (dual variable) 的优化问题，即通过求解与原问题等价的对偶问题（dual problem）得到原始问题的最优解，这就是线性可分条件下支持向量机的对偶算法，这样做的优点在于：<strong>一者对偶问题往往更容易求解；二者可以自然的引入核函数，进而推广到非线性分类问题。</strong></p>
+<p>详细过程请参考文章末尾给出的参考链接。</p>
+<h4 id="1-3-2-核函数Kernel"><a href="#1-3-2-核函数Kernel" class="headerlink" title="1.3.2 核函数Kernel"></a>1.3.2 核函数Kernel</h4><p>事实上，大部分时候数据并不是线性可分的，这个时候满足这样条件的超平面就根本不存在。在上文中，我们已经了解到了SVM处理线性可分的情况，那对于非线性的数据SVM咋处理呢？对于非线性的情况，SVM 的处理方法是选择一个核函数 κ(⋅,⋅) ，通过将数据映射到高维空间，来解决在原始空间中线性不可分的问题。</p>
+<p>具体来说，<strong>在线性不可分的情况下，支持向量机首先在低维空间中完成计算，然后通过核函数将输入空间映射到高维特征空间，最终在高维特征空间中构造出最优分离超平面，从而把平面上本身不好分的非线性数据分开。</strong>如图所示，一堆数据在二维空间无法划分，从而映射到三维空间里划分：</p>
+<p><img src="http://wx3.sinaimg.cn/mw690/00630Defly1g4w7t050xfj30nl0bajrv.jpg" alt=""></p>
+<p><img src="https://julyedu-img.oss-cn-beijing.aliyuncs.com/quesbase6415311358438441728.gif" alt=""></p>
+<p>通常人们会从一些常用的核函数中选择（根据问题和数据的不同，选择不同的参数，实际上就是得到了不同的核函数），例如：<strong>多项式核、高斯核、线性核。</strong></p>
+<p>读者可能还是没明白核函数到底是个什么东西？我再简要概括下，即以下三点：</p>
+<ol>
+<li>实际中，我们会经常遇到线性不可分的样例，此时，我们的常用做法是把样例特征映射到高维空间中去(映射到高维空间后，相关特征便被分开了，也就达到了分类的目的)；</li>
+<li>但进一步，如果凡是遇到线性不可分的样例，一律映射到高维空间，那么这个维度大小是会高到可怕的。那咋办呢？</li>
+<li>此时，核函数就隆重登场了，核函数的价值在于它虽然也是将特征进行从低维到高维的转换，<strong>但核函数绝就绝在它事先在低维上进行计算，而将实质上的分类效果表现在了高维上，避免了直接在高维空间中的复杂计算。</strong></li>
+</ol>
+<p><strong>如果数据中出现了离群点outliers，那么就可以使用松弛变量来解决。</strong></p>
+<p><strong>常见的核函数有哪些</strong></p>
+<table>
+<thead>
+<tr>
+<th>核函数</th>
+<th>表达式</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Linear Kernel线性核</td>
+<td>$k(x,y)=x^{t}y+c$</td>
+<td></td>
+</tr>
+<tr>
+<td>Polynomial Kernel多项式核</td>
+<td>$k(x,y)=(ax^{t}y+c)^{d}$</td>
+<td>$d\geqslant1$为多项式的次数</td>
+</tr>
+<tr>
+<td>Exponential Kernel指数核</td>
+<td>$k(x,y)=exp(-\frac{\left |x-y \right |}{2\sigma ^{2}})$</td>
+<td>$\sigma&gt;0$</td>
+</tr>
+<tr>
+<td>Gaussian Kernel高斯核</td>
+<td>$k(x,y)=exp(-\frac{\left |x-y \right |^{2}}{2\sigma ^{2}})$</td>
+<td>$\sigma$为高斯核的带宽，$\sigma&gt;0$,</td>
+</tr>
+<tr>
+<td>Laplacian Kernel拉普拉斯核</td>
+<td>$k(x,y)=exp(-\frac{\left |x-y \right |}{\sigma})$</td>
+<td>$\sigma&gt;0$</td>
+</tr>
+<tr>
+<td>ANOVA Kernel</td>
+<td>$k(x,y)=exp(-\sigma(x^{k}-y^{k})^{2})^{d}$</td>
+<td></td>
+</tr>
+<tr>
+<td>Sigmoid Kernel</td>
+<td>$k(x,y)=tanh(ax^{t}y+c)$</td>
+<td>$tanh$为双曲正切函数，$a&gt;0,c&lt;0$</td>
+</tr>
+</tbody></table>
+<h4 id="1-3-3-总结"><a href="#1-3-3-总结" class="headerlink" title="1.3.3 总结"></a>1.3.3 总结</h4><p>不准确的说，SVM它本质上即是一个分类方法，用 w^T+b 定义分类函数，于是求w、b，为寻最大间隔，引出1/2||w||^2，继而引入拉格朗日因子，化为对拉格朗日乘子a的求解（求解过程中会涉及到一系列最优化或凸二次规划等问题），如此，求w.b与求a等价，而a的求解可以用一种快速学习算法SMO，至于核函数，是为处理非线性情况，若直接映射到高维计算恐维度爆炸，故在低维计算，等效高维表现。</p>
+<p>OK，理解到这第二层，已经能满足绝大部分人一窥SVM原理的好奇心，针对于面试来说已经足够了。</p>
+<h3 id="1-4-SVM的应用"><a href="#1-4-SVM的应用" class="headerlink" title="1.4 SVM的应用"></a>1.4 SVM的应用</h3><p>SVM在很多诸如<strong>文本分类，图像分类，生物序列分析和生物数据挖掘，手写字符识别等领域有很多的应用</strong>，但或许你并没强烈的意识到，SVM可以成功应用的领域远远超出现在已经在开发应用了的领域。</p>
+<h2 id="2-SVM的一些问题"><a href="#2-SVM的一些问题" class="headerlink" title="2. SVM的一些问题"></a>2. SVM的一些问题</h2><ol>
+<li><p>是否存在一组参数使SVM训练误差为0？</p>
+<p>答：存在</p>
+</li>
+<li><p>训练误差为0的SVM分类器一定存在吗？</p>
+<p>答：一定存在</p>
+</li>
+<li><p>加入松弛变量的SVM的训练误差可以为0吗？</p>
+<p>答：使用SMO算法训练的线性分类器并不一定能得到训练误差为0的模型。这是由于我们的优化目标改变了，并不再是使训练误差最小。</p>
+</li>
+<li><p>*<em>带核的SVM为什么能分类非线性问题？ *</em></p>
+<p>答：核函数的本质是两个函数的內积，通过核函数将其隐射到高维空间，在高维空间非线性问题转化为线性问题, SVM得到超平面是高维空间的线性分类平面。其分类结果也视为低维空间的非线性分类结果, 因而带核的SVM就能分类非线性问题。</p>
+</li>
+<li><p><strong>如何选择核函数？</strong></p>
+<ul>
+<li>如果特征的数量大到和样本数量差不多，则选用LR或者线性核的SVM；</li>
+<li>如果特征的数量小，样本的数量正常，则选用SVM+高斯核函数；</li>
+<li>如果特征的数量小，而样本的数量很大，则需要手工添加一些特征从而变成第一种情况。</li>
+</ul>
+</li>
+</ol>
+<h2 id="3-LR和SVM的联系与区别"><a href="#3-LR和SVM的联系与区别" class="headerlink" title="3. LR和SVM的联系与区别"></a>3. LR和SVM的联系与区别</h2><h3 id="3-1-相同点"><a href="#3-1-相同点" class="headerlink" title="3.1 相同点"></a>3.1 相同点</h3><ul>
+<li>都是线性分类器。本质上都是求一个最佳分类超平面。</li>
+<li>都是监督学习算法。</li>
+<li>都是判别模型。判别模型不关心数据是怎么生成的，它只关心信号之间的差别，然后用差别来简单对给定的一个信号进行分类。常见的判别模型有：KNN、SVM、LR，常见的生成模型有：朴素贝叶斯，隐马尔可夫模型。</li>
+</ul>
+<h3 id="3-2-不同点"><a href="#3-2-不同点" class="headerlink" title="3.2 不同点"></a>3.2 不同点</h3><ul>
+<li>LR是参数模型，svm是非参数模型，linear和rbf则是针对数据线性可分和不可分的区别；</li>
+<li>从目标函数来看，区别在于逻辑回归采用的是logistical loss，SVM采用的是hinge loss，这两个损失函数的目的都是增加对分类影响较大的数据点的权重，减少与分类关系较小的数据点的权重。 </li>
+<li>SVM的处理方法是只考虑support vectors，也就是和分类最相关的少数点，去学习分类器。而逻辑回归通过非线性映射，大大减小了离分类平面较远的点的权重，相对提升了与分类最相关的数据点的权重。 </li>
+<li>逻辑回归相对来说模型更简单，好理解，特别是大规模线性分类时比较方便。而SVM的理解和优化相对来说复杂一些，SVM转化为对偶问题后,分类只需要计算与少数几个支持向量的距离,这个在进行复杂核函数计算时优势很明显,能够大大简化模型和计算。 </li>
+<li>logic 能做的 svm能做，但可能在准确率上有问题，svm能做的logic有的做不了。</li>
+</ul>
+<h2 id="4-线性分类器与非线性分类器的区别以及优劣"><a href="#4-线性分类器与非线性分类器的区别以及优劣" class="headerlink" title="4. 线性分类器与非线性分类器的区别以及优劣"></a>4. 线性分类器与非线性分类器的区别以及优劣</h2><p>线性和非线性是针对模型参数和输入特征来讲的；比如输入x，模型y=ax+ax^2 那么就是非线性模型，如果输入是x和X^2则模型是线性的。</p>
+<ul>
+<li><p>线性分类器可解释性好，计算复杂度较低，不足之处是模型的拟合效果相对弱些。</p>
+<p>LR,贝叶斯分类，单层感知机、线性回归</p>
+</li>
+<li><p>非线性分类器效果拟合能力较强，不足之处是数据量不足容易过拟合、计算复杂度高、可解释性不好。</p>
+<p>决策树、RF、GBDT、多层感知机</p>
+</li>
+</ul>
+<p><strong>SVM两种都有（看线性核还是高斯核）</strong></p>
+<h2 id="5-代码实现"><a href="#5-代码实现" class="headerlink" title="5. 代码实现"></a>5. 代码实现</h2><p>新闻分类   GitHub：<a href="https://github.com/NLP-LOVE/ML-NLP/tree/master/Machine%20Learning/4.%20SVM/news%20classification" target="_blank" rel="noopener">点击进入</a></p>
+<h2 id="6-参考文献"><a href="#6-参考文献" class="headerlink" title="6. 参考文献"></a>6. 参考文献</h2><p><a href="https://blog.csdn.net/v_july_v/article/details/7624837" target="_blank" rel="noopener">支持向量机通俗导论（理解SVM的三层境界）</a></p>
+<blockquote>
+<p>作者：<a href="https://github.com/NLP-LOVE/ML-NLP" target="_blank" rel="noopener">@mantchs</a></p>
+<p>GitHub：<a href="https://github.com/NLP-LOVE/ML-NLP" target="_blank" rel="noopener">https://github.com/NLP-LOVE/ML-NLP</a></p>
+<p>欢迎大家加入讨论！共同完善此项目！群号：【541954936】<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=863f915b9178560bd32ca07cd090a7d9e6f5f90fcff5667489697b1621cecdb3"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="NLP面试学习群" title="NLP面试学习群"></a></p>
+</blockquote>
+
+      </div>
+      
+      
+        <br>
+        
+
+
+  <section class='meta' id="footer-meta">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-12-25T13:36:46+08:00">
+  <a class='notlink'>
+    <i class="fas fa-clock" aria-hidden="true"></i>
+    <p>更新于 2019年12月25日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
+          
+          href="http://connect.qq.com/widget/shareqq/index.html?url=http://reverent-montalcini-17e4bf.netlify.com/2019/07/11/ML/SVM/&title=【机器学习】支持向量机(SVM) | mantch的博客&pics=https://gitee.com/kkweishe/images/raw/master/ML/2019-12-24_15-51-11.png&summary=1.1 一个关于SVM的童话故事 支持向量机（Support Vector Machine，SVM）是众多监督学习方法中十分出色的一种，几乎所有讲述经典机器学习方法的教材都会介绍。关于SVM，流传着一个关于天使与魔鬼的故事。 传说魔鬼和天使玩了一个游戏，魔鬼在桌上放了两种颜色的球。魔鬼让天使用一根…"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
+          
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://reverent-montalcini-17e4bf.netlify.com/2019/07/11/ML/SVM/&title=【机器学习】支持向量机(SVM) | mantch的博客&pics=https://gitee.com/kkweishe/images/raw/master/ML/2019-12-24_15-51-11.png&summary=1.1 一个关于SVM的童话故事 支持向量机（Support Vector Machine，SVM）是众多监督学习方法中十分出色的一种，几乎所有讲述经典机器学习方法的教材都会介绍。关于SVM，流传着一个关于天使与魔鬼的故事。 传说魔鬼和天使玩了一个游戏，魔鬼在桌上放了两种颜色的球。魔鬼让天使用一根…"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
+          
+          href="http://service.weibo.com/share/share.php?url=http://reverent-montalcini-17e4bf.netlify.com/2019/07/11/ML/SVM/&title=【机器学习】支持向量机(SVM) | mantch的博客&pics=https://gitee.com/kkweishe/images/raw/master/ML/2019-12-24_15-51-11.png&summary=1.1 一个关于SVM的童话故事 支持向量机（Support Vector Machine，SVM）是众多监督学习方法中十分出色的一种，几乎所有讲述经典机器学习方法的教材都会介绍。关于SVM，流传着一个关于天使与魔鬼的故事。 传说魔鬼和天使玩了一个游戏，魔鬼在桌上放了两种颜色的球。魔鬼让天使用一根…"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </section>
+
+
+      
+      
+          <div class="prev-next">
+              
+                  <section class="prev">
+                      <span class="art-item-left">
+                          <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
+                          <h4>
+                              <a href="/2019/07/13/ML/Bayes%20Network/" rel="prev" title="【机器学习】贝叶斯网络">
+                                
+                                    【机器学习】贝叶斯网络
+                                
+                              </a>
+                          </h4>
+                          
+                      </span>
+                  </section>
+              
+              
+                  <section class="next">
+                      <span class="art-item-right" aria-hidden="true">
+                          <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                          <h4>
+                              <a href="/2019/07/10/ML/LightGBM/" rel="prev" title="【机器学习】LightGBM">
+                                  
+                                      【机器学习】LightGBM
+                                  
+                              </a>
+                          </h4>
+                          
+                      </span>
+                  </section>
+              
+          </div>
+      
+    </section>
+  </article>
+
+
+
+  <!-- 显示推荐文章和评论 -->
+
+
+
+  <article class="post white-box comments">
+    <section class="article typo">
+      <h4><i class="fas fa-comments fa-fw" aria-hidden="true"></i>&nbsp;评论</h4>
+      
+      
+      
+        <section id="comments">
+          <div id="gitalk-container"></div>
+        </section>
+      
+      
+    </section>
+  </article>
+
+
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+  <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX","TeX"],
+      linebreaks: { automatic:true },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: { autoNumber: "AMS" },
+      noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+      Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += (all[i].SourceElement().parentNode.className ? ' ' : '') + 'has-jax';
+    }
+  });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+
+  <script>
+    window.subData = {
+      title: '【机器学习】支持向量机(SVM)',
+      tools: true
+    }
+  </script>
+
+
+</div>
+<aside class='l_side'>
+  
+    
+    
+      
+      
+        
+          
+          
+            
+              <section class='widget author'>
+  <div class='content pure'>
+    
+      <div class='avatar'>
+        <img class='avatar' src='https://gitee.com/kkweishe/images/raw/master/ML/2019-12-24_16-7-39.png'/>
+      </div>
+    
+    
+      <div class='text'>
+        
+        
+        
+          <p><span id="jinrishici-sentence">mantch的博客</span></p>
+          <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+        
+      </div>
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="mailto:mantchs@163.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://github.com/NLP-LOVE"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+            
+              <section class='widget plain'>
+  
+<header class='pure'>
+  <div><i class="fas fa-file fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;AI-Area</div>
+  
+</header>
+
+  <div class='content pure'>
+    <p>微信公众号(最新文章分享)，请关注!<br><img src="https://gitee.com/kkweishe/images/raw/master/ML/2019-12-24_16-17-47.png" alt=""></p>
+
+  </div>
+</section>
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            
+              
+  <section class='widget toc-wrapper'>
+    
+<header class='pure'>
+  <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;本文目录</div>
+  
+    <!-- <div class='wrapper'><a class="s-toc rightBtn" rel="external nofollow noopener noreferrer" href="javascript:void(0)"><i class="fas fa-thumbtack fa-fw"></i></a></div> -->
+  
+</header>
+
+    <div class='content pure'>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-讲讲SVM"><span class="toc-text">1. 讲讲SVM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-一个关于SVM的童话故事"><span class="toc-text">1.1 一个关于SVM的童话故事</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-理解SVM：第一层"><span class="toc-text">1.2 理解SVM：第一层</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-函数间隔与几何间隔"><span class="toc-text">1.2.1 函数间隔与几何间隔</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-最大间隔分类器的定义"><span class="toc-text">1.2.2 最大间隔分类器的定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-最大间隔损失函数Hinge-loss"><span class="toc-text">1.2.3 最大间隔损失函数Hinge loss</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-深入SVM：第二层"><span class="toc-text">1.3 深入SVM：第二层</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-1-从线性可分到线性不可分"><span class="toc-text">1.3.1 从线性可分到线性不可分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-2-核函数Kernel"><span class="toc-text">1.3.2 核函数Kernel</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-3-总结"><span class="toc-text">1.3.3 总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-SVM的应用"><span class="toc-text">1.4 SVM的应用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-SVM的一些问题"><span class="toc-text">2. SVM的一些问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-LR和SVM的联系与区别"><span class="toc-text">3. LR和SVM的联系与区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-相同点"><span class="toc-text">3.1 相同点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-不同点"><span class="toc-text">3.2 不同点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-线性分类器与非线性分类器的区别以及优劣"><span class="toc-text">4. 线性分类器与非线性分类器的区别以及优劣</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-代码实现"><span class="toc-text">5. 代码实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-参考文献"><span class="toc-text">6. 参考文献</span></a></li></ol>
+    </div>
+  </section>
+
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            
+              <section class='widget grid'>
+  
+<header class='pure'>
+  <div><i class="fas fa-map-signs fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;站内导航</div>
+  
+</header>
+
+  <div class='content pure'>
+    <ul class="grid navgation">
+      
+        <li><a class="flat-box" title="/" href="/"
+          
+          
+          id="home">
+          
+            <i class="fas fa-clock fa-fw" aria-hidden="true"></i>
+          
+          近期文章
+        </a></li>
+      
+        <li><a class="flat-box" title="/archives/" href="/archives/"
+          
+            rel="nofollow"
+          
+          
+          id="archives">
+          
+            <i class="fas fa-archive fa-fw" aria-hidden="true"></i>
+          
+          文章归档
+        </a></li>
+      
+        <li><a class="flat-box" title="/projects/mantch/" href="/projects/mantch/"
+          
+          
+          id="projectsmantch">
+          
+            <i class="fas fa-code-branch fa-fw" aria-hidden="true"></i>
+          
+          项目&资源
+        </a></li>
+      
+        <li><a class="flat-box" title="/friends/" href="/friends/"
+          
+            rel="nofollow"
+          
+          
+          id="friends">
+          
+            <i class="fas fa-link fa-fw" aria-hidden="true"></i>
+          
+          我的友链
+        </a></li>
+      
+        <li><a class="flat-box" title="https://xaoxuu.com/wiki/material-x/" href="https://xaoxuu.com/wiki/material-x/"
+          
+            rel="nofollow"
+          
+          
+          id="https:xaoxuu.comwikimaterial-x">
+          
+            <i class="fas fa-book fa-fw" aria-hidden="true"></i>
+          
+          主题文档
+        </a></li>
+      
+        <li><a class="flat-box" title="/about/mantch/" href="/about/mantch/"
+          
+            rel="nofollow"
+          
+          
+          id="aboutmantch">
+          
+            <i class="fas fa-info-circle fa-fw" aria-hidden="true"></i>
+          
+          关于小站
+        </a></li>
+      
+    </ul>
+  </div>
+</section>
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            
+              
+  <section class='widget category'>
+    
+<header class='pure'>
+  <div><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;文章分类</div>
+  
+    <a class="rightBtn"
+    
+      rel="nofollow"
+    
+    
+    href="/blog/categories/"
+    title="blog/categories/">
+    <i class="fas fa-expand-arrows-alt fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      <ul class="entry">
+        
+          <li><a class="flat-box" title="/categories/NLP/" href="/categories/NLP/"><div class='name'>NLP</div><div class='badge'>(11)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F/" href="/categories/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F/"><div class='name'>推荐系统</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"><div class='name'>机器学习</div><div class='badge'>(15)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><div class='name'>深度学习</div><div class='badge'>(8)</div></a></li>
+        
+      </ul>
+    </div>
+  </section>
+
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            
+              
+
+            
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+    
+
+  
+</aside>
+
+<footer id="footer" class="clearfix">
+  
+  
+    <div class="social-wrapper">
+      
+        
+          <a href="mailto:mantchs@163.com"
+            class="social fas fa-envelope flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://github.com/NLP-LOVE"
+            class="social fab fa-github flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+    </div>
+  
+  <br>
+  <div><p>博客内容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+  <div>
+    本站使用
+    <a href="https://xaoxuu.com/wiki/material-x/" target="_blank" class="codename">Material X</a>
+    作为主题
+    
+      ，
+      总访问量为
+      <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
+      次
+    
+    。
+  </div>
+</footer>
+<script>setLoadingBarProgress(80);</script>
+
+
+
+
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+    <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)'></a>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+
+  <script>
+    var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+    var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+    var ALGOLIA_API_KEY = "";
+    var ALGOLIA_APP_ID = "";
+    var ALGOLIA_INDEX_NAME = "";
+    var AZURE_SERVICE_NAME = "";
+    var AZURE_INDEX_NAME = "";
+    var AZURE_QUERY_KEY = "";
+    var BAIDU_API_ID = "";
+    var SEARCH_SERVICE = "hexo" || "hexo";
+    var ROOT = "/"||"/";
+    if(!ROOT.endsWith('/'))ROOT += '/';
+  </script>
+
+<script src="//instant.page/1.2.2" type="module" integrity="sha384-2xV8M5griQmzyiY3CDqh1dn4z3llDVqZDqzjzcY+jCBCk/a5fXJmuZ/40JJAPeoU"></script>
+
+
+  <script async src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.5/dist/scrollreveal.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      const $reveal = $('.reveal');
+      if ($reveal.length === 0) return;
+      const sr = ScrollReveal({ distance: 0 });
+      sr.reveal('.reveal');
+    });
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+  
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        if ('.cover') {
+          $('.cover').backstretch(
+          ["https://img.vim-cn.com/29/91197b04c13f512f734a76d4ac422d89dbe229.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        } else {
+          $.backstretch(
+          ["https://img.vim-cn.com/29/91197b04c13f512f734a76d4ac422d89dbe229.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: "9e843f5ca6489d3dafe8",
+      clientSecret: "4c4ecc0dc9d3f67c295c96945ada3ad65fe6d3d5",
+      repo: "blog-comment",
+      owner: "NLP-LOVE",
+      admin: "NLP-LOVE",
+      
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+      
+      distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+    gitalk.render('gitalk-container');
+  </script>
+
+
+
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+  
+<script src="/js/search.js"></script>
+
+
+
+
+
+<!-- 复制 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  let COPY_SUCCESS = "复制成功";
+  let COPY_FAILURE = "复制失败";
+  /*页面载入完成后，创建复制按钮*/
+  !function (e, t, a) {
+    /* code */
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '  <i class="fa fa-copy"></i><span>复制</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+
+      clipboard.on('success', function(e) {
+        //您可以加入成功提示
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+        success_prompt(COPY_SUCCESS);
+        e.clearSelection();
+      });
+      clipboard.on('error', function(e) {
+        //您可以加入失败提示
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+        fail_prompt(COPY_FAILURE);
+      });
+    }
+    initCopyCode();
+
+  }(window, document);
+
+  /**
+   * 弹出式提示框，默认1.5秒自动消失
+   * @param message 提示信息
+   * @param style 提示样式，有alert-success、alert-danger、alert-warning、alert-info
+   * @param time 消失时间
+   */
+  var prompt = function (message, style, time)
+  {
+      style = (style === undefined) ? 'alert-success' : style;
+      time = (time === undefined) ? 1500 : time*1000;
+      $('<div>')
+          .appendTo('body')
+          .addClass('alert ' + style)
+          .html(message)
+          .show()
+          .delay(time)
+          .fadeOut();
+  };
+
+  // 成功提示
+  var success_prompt = function(message, time)
+  {
+      prompt(message, 'alert-success', time);
+  };
+
+  // 失败提示
+  var fail_prompt = function(message, time)
+  {
+      prompt(message, 'alert-danger', time);
+  };
+
+  // 提醒
+  var warning_prompt = function(message, time)
+  {
+      prompt(message, 'alert-warning', time);
+  };
+
+  // 信息提示
+  var info_prompt = function(message, time)
+  {
+      prompt(message, 'alert-info', time);
+  };
+
+</script>
+
+
+<!-- fancybox -->
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  let LAZY_LOAD_IMAGE = "";
+  $(".article-entry").find("fancybox").find("img").each(function () {
+      var element = document.createElement("a");
+      $(element).attr("data-fancybox", "gallery");
+      $(element).attr("href", $(this).attr("src"));
+      /* 图片采用懒加载处理时,
+       * 一般图片标签内会有个属性名来存放图片的真实地址，比如 data-original,
+       * 那么此处将原本的属性名src替换为对应属性名data-original,
+       * 修改如下
+       */
+       if (LAZY_LOAD_IMAGE) {
+         $(element).attr("href", $(this).attr("data-original"));
+       }
+      $(this).wrap(element);
+  });
+</script>
+
+
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+</body>
+</html>

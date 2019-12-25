@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>【NLP】智能客服 | mantch的博客</title>
+  
+  
+
+  
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- meta -->
+  
+
+  <!-- link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.10.1/css/all.min.css">
+  
+
+  
+  <link rel="shortcut icon" type='image/x-icon' href="https://gitee.com/kkweishe/images/raw/master/ML/2019-12-24_15-43-44.png">
+  
+
+  
+    
+<link rel="stylesheet" href="/style.css">
+
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+
+  
+  
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  
+  
+  <div class="cover-wrapper">
+    <cover class='cover post half'>
+      
+        
+  <h1 class='title'>mantch</h1>
+
+
+  <div class="m_search">
+    <form name="searchform" class="form u-search-form">
+      <input type="text" class="input u-search-input" placeholder="" />
+      <i class="icon fas fa-search fa-fw"></i>
+    </form>
+  </div>
+
+<div class='menu navgation'>
+  <ul class='h-list'>
+    
+      
+        <li>
+          <a class="nav home" href="/"
+            
+            
+            id="home">
+            <i class='fas fa-rss fa-fw'></i>&nbsp;博文
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/categories/"
+            
+            
+            id="categories">
+            <i class='fas fa-folder-open fa-fw'></i>&nbsp;分类
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/projects/mantch/"
+            
+            
+            id="projectsmantch">
+            <i class='fas fa-code-branch fa-fw'></i>&nbsp;项目&amp;资源
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/about/mantch/"
+            
+              rel="nofollow"
+            
+            
+            id="aboutmantch">
+            <i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+          </a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+      
+    </cover>
+    <header class="l_header pure">
+  <div id="loading-bar-wrapper">
+    <div id="loading-bar" class="pure"></div>
+  </div>
+
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+      <a class="logo flat-box" href='/' >
+        
+          mantch的博客
+        
+      </a>
+			<div class='menu navgation'>
+				<ul class='h-list'>
+          
+  					
+  						<li>
+								<a class="nav flat-box" href="/categories/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="categories">
+									<i class='fas fa-folder-open fa-fw'></i>&nbsp;分类
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/tags/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="tags">
+									<i class='fas fa-hashtag fa-fw'></i>&nbsp;标签
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/archives/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="archives">
+									<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+								</a>
+							</li>
+      			
+      		
+				</ul>
+			</div>
+
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="搜索" />
+						<i class="icon fas fa-search fa-fw"></i>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a class="fas fa-search fa-fw" href='javascript:void(0)'></a></li>
+				
+				<li class='s-menu'><a class="fas fa-bars fa-fw" href='javascript:void(0)'></a></li>
+			</ul>
+		</div>
+
+		<div class='nav-sub container container--flex'>
+			<a class="logo flat-box"></a>
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a class="flat-btn fas fa-comments fa-fw" href='javascript:void(0)'></a></li>
+        
+          <li class='s-toc'><a class="flat-btn fas fa-list fa-fw" href='javascript:void(0)'></a></li>
+        
+			</ul>
+		</div>
+	</div>
+</header>
+	<aside class="menu-phone">
+    <header>
+		<nav class="menu navgation">
+      <ul>
+        
+          
+            <li>
+							<a class="nav flat-box" href="/"
+                
+                
+                id="home">
+								<i class='fas fa-clock fa-fw'></i>&nbsp;近期文章
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/archives/"
+                
+                  rel="nofollow"
+                
+                
+                id="archives">
+								<i class='fas fa-archive fa-fw'></i>&nbsp;文章归档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/projects/mantch/"
+                
+                
+                id="projectsmantch">
+								<i class='fas fa-code-branch fa-fw'></i>&nbsp;项目&amp;资源
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/friends/"
+                
+                  rel="nofollow"
+                
+                
+                id="friends">
+								<i class='fas fa-link fa-fw'></i>&nbsp;我的友链
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="https://xaoxuu.com/wiki/material-x/"
+                
+                  rel="nofollow"
+                
+                
+                id="https:xaoxuu.comwikimaterial-x">
+								<i class='fas fa-book fa-fw'></i>&nbsp;主题文档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/about/mantch/"
+                
+                  rel="nofollow"
+                
+                
+                id="aboutmantch">
+								<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于小站
+							</a>
+            </li>
+          
+       
+      </ul>
+		</nav>
+    </header>
+	</aside>
+<script>setLoadingBarProgress(40);</script>
+
+  </div>
+
+
+  <div class="l_body">
+    <div class='body-wrapper'>
+      <div class='l_main'>
+  
+
+  <article id="post" class="post white-box article-type-post" itemscope itemprop="blogPost">
+    
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  
+    <h1 class="title">
+      <a href="/2019/09/30/NLP/Intelligent%20Customer%20Service/">
+        【NLP】智能客服
+      </a>
+    </h1>
+  
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+  <div class='new-meta-item author'>
+    
+      <a href="http://reverent-montalcini-17e4bf.netlify.com" rel="nofollow">
+        
+          <img src="https://gitee.com/kkweishe/images/raw/master/ML/2019-12-24_15-51-11.png">
+        
+        <p>mantch</p>
+      </a>
+    
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+    <p>2019-09-30</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/NLP/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>NLP</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            
+  
+    <div class="new-meta-item browse busuanzi">
+      <a class='notlink'>
+        <i class="fas fa-eye" aria-hidden="true"></i>
+        <p>
+          <span id="busuanzi_value_page_pv">
+            <i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
+          </span>
+        </p>
+      </a>
+    </div>
+  
+
+
+          
+        
+          
+            
+  
+    <div class="new-meta-item wordcount">
+      <a class='notlink'>
+        <i class="fas fa-keyboard" aria-hidden="true"></i>
+        <p>字数统计:</p>
+        <p>5.8k字</p>
+      </a>
+    </div>
+    <div class="new-meta-item readtime">
+      <a class='notlink'>
+        <i class="fas fa-hourglass-half" aria-hidden="true"></i>
+        <p>阅读时长≈</p>
+        <p>19分</p>
+      </a>
+    </div>
+  
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+    <section class="article typo">
+      <div class="article-entry" itemprop="articleBody">
+        <p>我们就会产生一个想法：能不能有一个机器人来回答这些重复的问题，它能 24 小时的工作不用休息，降低客户成本，还能挖掘聊天记录里面的一些有价值的知识点。这就是智能客服产生的背景。</p>
+<a id="more"></a>
+
+<h2 id="1-智能客服系统"><a href="#1-智能客服系统" class="headerlink" title="1. 智能客服系统"></a>1. 智能客服系统</h2><p>智能客服产生的背景：为什么要有智能客服这样的一个产品，或者说研究方向呢？主要有以下这几个原因：</p>
+<ul>
+<li>我们日常生活中会遇到大量的客服问题，比如说你打电话给联通、移动等，或者说在淘宝上买东西，这些问题大部分都是一些重复的问题，而且频率也特别高，非常的耗人工；</li>
+<li>对于一个客服密集型的企业来说，大量的人工客服，造成了企业的客服成本非常的高；</li>
+<li>人工客服是没有办法做到 24 小时全天候的服务；</li>
+<li>在客户和客服的对话的过程中产生了大量的有价值的数据，这些数据也没有被很好的利用起来。</li>
+</ul>
+<p>基于以上的这些原因，我们就会产生一个想法：能不能有一个机器人来回答这些重复的问题，它能 24 小时的工作不用休息，降低客户成本，还能挖掘聊天记录里面的一些有价值的知识点。这就是智能客服产生的背景。</p>
+<h3 id="1-1-智能客服的目标"><a href="#1-1-智能客服的目标" class="headerlink" title="1.1 智能客服的目标"></a>1.1 智能客服的目标</h3><p>如果说要做一个智能客服，那做智能客服的一个基本的目标，或者说它的技术目标是要做到什么样的程度呢？它是要完全的替代人工，还是要部分的替代人工呢?</p>
+<p>一般情况下，一个智能客服的目标就是下面这张图里描述的这些：一个客服的机器人负责回答客户的一些高频简单问题，将疑难问题交给人工客服团队来回答。那这个一定比例是多大比例呢？我这边写了一个百分之 X，也就是说这个比例不太确定，它是根据不同的场景以及不同的技术条件，不同厂商的技术能力而不同的，有的厂商是 80%，有的是 90%，有的甚至 95%，这都是不确定的。</p>
+<p><img src="https://gitee.com/kkweishe/images/raw/master/ML/2019-9-8_21-6-1.png" alt=""></p>
+<p>总之智能客服做的一个技术目标就是：<strong>一定比例的解决客服的简单的高频问题，将疑难问题仍然交给人工客服团队。</strong>这是目前智能客服一个基本的技术目标，是一个比较现实的目标。那么想让客服的机器人来完全取代人工客服，这个目标到目前为止，在绝大部分场景下还是没有办法实现的。</p>
+<h3 id="1-2-细分领域"><a href="#1-2-细分领域" class="headerlink" title="1.2 细分领域"></a>1.2 细分领域</h3><p>整个智能客服系统的发展非常快，应用也划分了很多的细分领域。</p>
+<ol>
+<li>第一大类是<strong>对话操作系统级别的系统</strong>。那么这一类系统比较有代表性的有亚马逊的 Alexa，这些系统都希望做操作系统级别的人机对话，就是把人机对话直接做成一个操作系统，那在这个系统上开发各种各样不同的智能硬件、软件等等这些应用。</li>
+<li>第二大类，就是<strong>智能客服</strong>，智能客服里面又细分成两类：一类是企业内部的智能客服，为了企业自身的业务发展需要研发的智能客户系统；还有一类是对外服务的智能客服，并且以 SaaS 的方式对外服务。</li>
+<li>第三大类就是<strong>个人助理类</strong>，最有名的就是苹果的 Siri，还有微软的 Cortana 等。智能家居现在做得比较火热的就是一些智能音箱，比如说亚马逊 Echo 等。还有些公司是做一些智能交互的服务，这些智能交互服务主要是自然语言处理和意图识别方面的服务，其他的厂商可以基于这些智能交互服务做一些自己的应用。</li>
+<li>第四类是<strong>开放平台</strong>，这个开放平台也可以叫 Bot Factory，比较有代表性的，有 Google 的 API.AI、Facebook 的 Wit.AI、还有微软的 Luis.AI 等等。这些开放平台主要是做任务对话方面的一些定制。</li>
+</ol>
+<h3 id="1-3-智能客服常见功能"><a href="#1-3-智能客服常见功能" class="headerlink" title="1.3 智能客服常见功能"></a>1.3 智能客服常见功能</h3><p>智能客服系统最常见的功能有哪些？目前最常见的形式是在人工客服系统基础上，扩展出智能客服的功能，最常见的功能有 <strong>单轮问答、多轮对话和人机协作。</strong></p>
+<ul>
+<li><strong>单轮问答</strong>：一问一答，但是没有记录上下文，每一次问答和下一次问答都没有任何的关系；</li>
+<li><strong>多轮对话</strong>：是带着上下文来问答，每个问答可能跟它的上文是有一定关系，或者是它记录了上文的一些信息；</li>
+<li><strong>人机协作</strong>：人机协作是一种比较有效的一种智能客服功能，现有的方式主要有两大类：一类是机器人加人工进行问答，另外一大类是机器人推荐答案，人工选择回答 。我们这里举几个例子：比如说上班的时候人工来回答，下班的时候机器人来回答；普通的客户机器人来回答，VIP 客户人工来回答；或者是说分渠道来选择，比如说微信渠道来的机器人回答，手机渠道来的人工回答；还有就是机器人优先，机器人答不出来，转给人工回答。</li>
+</ul>
+<h2 id="2-智能客服的工作原理"><a href="#2-智能客服的工作原理" class="headerlink" title="2. 智能客服的工作原理"></a>2. 智能客服的工作原理</h2><p>刚才我们是给智能客服做了一个概述。接下来，我们介绍一下智能客服的工作原理。一个常见的智能客服，就包括以下这些模块并且按照一个类似的流程进行工作。</p>
+<p><img src="https://gitee.com/kkweishe/images/raw/master/ML/2019-9-8_21-14-50.png" alt=""></p>
+<ol>
+<li><strong>识别模块</strong>：首先可能会有一个 ASR（语音识别）模块，也可能没有，这取决于具体厂商的一个选择，这个语音识别模块会把语音转换成文字。如果没有语音识别模块，直接就是文字。</li>
+<li><strong>意图识别</strong>：对这个文字做一个问句的理解，或者说做一个查询的理解，理解完以后，再对意图做一个识别；</li>
+<li><strong>机器回答</strong>：最后，我们把这个问句的理解和意图识别的结果带到对话管理系统里边，对话管理系统会决定到底是给哪一种机器人发过去，这些机器人最后给出答案，将答案返回。</li>
+</ol>
+<p>对话管理系统可以选择一个机器人将问题发过去，也可以同时将问题发给所有的机器人，当它们都回复答案时，进行答案选择再返回，使用哪种方式取决于厂商自己的一个选择。上图中这四种机器人分别对应了四种不同的模块：</p>
+<ul>
+<li>第一种是<strong>任务管理类</strong>的模块，比如说订机票，它属于一个特定的任务，这种机器人就类似苹果的 Siri，是任务处理类；</li>
+<li>第二种是<strong>知识库问答</strong>，也就是咨询问答类的，只是做一些咨询类的工作，一般情况下，它并不处理实际的一些任务；</li>
+<li>第三类是<strong>知识图谱问答</strong>，知识图谱是知识库常见的是提供一个问答对结构和一个树型结构，知识图谱提供一个图结构，可以认为是一个广义上的知识库问答。</li>
+<li>第四类是<strong>聊天机器人</strong>的技术，聊天并不是客服的首要功能，客服主要是解决问题的，不是来聊天的，为什么在一个智能客服系统里面会有聊天这么一个功能呢？原因在于，一是在用户没有输入知识库内容的时候，这个聊天机器人会被客户当成是测试厂商机器人技术能力的评测对象；二是在某些场景下，会让整个客服对话没那么单调。</li>
+</ul>
+<h3 id="2-1-自然语言理解"><a href="#2-1-自然语言理解" class="headerlink" title="2.1 自然语言理解"></a>2.1 自然语言理解</h3><p>自然语言理解主要做一些什么事情呢？比如说用户的问题如果是多句话，那么我们做一个<strong>“分句”</strong>，对每一句话来寻找答案，最后呢，将答案组合起来，发给用户；“分词”很常见，分词后才能理解，才能进行标注，进行实体识别，这是常规的一些处理，然后就是句法分析、指代消解，再有就是词权重、语义相似度等等，做这些分析都是为后面的算法做准备，这是第一部分的预处理工作，就是自然语言理解或者自然语言处理的内容。 </p>
+<h3 id="2-2-意图识别"><a href="#2-2-意图识别" class="headerlink" title="2.2 意图识别"></a>2.2 意图识别</h3><p>第二部分的预处理工作就是意图识别。意图识别主要是用户的这句话暴露了用户什么样的意图，比如说我们这个例子里：“今天天气怎么样”，这个意图实际上就是用户要问天气。那么如果用户说“帮我定一张去上海的机票”，这个意思就是用户要订机票。</p>
+<p>那么意图识别一般是怎么实现的？就是有模板和分类器两种方式。</p>
+<p><strong>模板的方式</strong>，比如说：“北京今天天气怎么样？”我们会建一个叫“city”的词典，这里面会有北京、上海、天津等城市；我们会把今天、明天、后天等等也做一个词典，词典名字叫做“date”。这样如果满足刚开始有一个“city”，中间有任意字符串，然后再有一个“date”，然后再有“天气”这个词，就满足了一个模板，那么我们基本上可以认为它是一个询问天气怎么样的意图，这是模板的方法。</p>
+<p><strong>分类器</strong>的方法很容易理解，我们在某一个特定领域里面收集大量语料，人工去标注这些语料是属于哪种意图的，用分类器模型来做一些二分类或者多分类的分类器，用来判断意图。但是分类器方法需要大量人工标注的数据，以及如何去收集多个领域里面的语料的问题。</p>
+<p>基于知识库的问答可以使用检索或者分类模型来实现。检索式回答的流程是：首先对用户的输入问题做处理，如分词、抽取关键词、同义词扩展、计算句子向量等；然后基于处理结果在知识库中做检索匹配，例如利用BM25、TF-IDF或者向量相似度等匹配出一个问题集合，这类似推荐系统中的召回过程；</p>
+<p>由于我们是一个问答系统，最终是直接返回给用户一个答案，因此需要从问题集合中挑出最相似的那个问题，这里会对问题集合做重排序，例如利用规则、机器学习或者深度学习模型做排序，每个问题会被打上一个分值，最终挑选出top1，将这个问题对应的答案返回给用户，这就完成了一次对话流程。在实际应用中，我们还会设置阈值来保证回答的准确性，若最终每个问题的得分低于阈值，会将头部的几个问题以列表的形式返回给用户，最终用户可以选择他想问的问题，进而得到具体的答案。</p>
+<h3 id="2-3-知识库"><a href="#2-3-知识库" class="headerlink" title="2.3 知识库"></a>2.3 知识库</h3><p>知识库问答的技术本质也是用一些跟搜索引擎相似的技术，分为两个阶段：<strong>第一个阶段是侯选集召回，第二个阶段是重排序。</strong></p>
+<p>首先是侯选集，侯选集<strong>召回</strong>有很多种方式，和搜索引擎相比，相对简单，原因是搜索引擎要召回的量特别的大，但是知识库，因为是人工导入的，它的召回的就没有那么复杂。</p>
+<p>第二是<strong>重排序</strong>，其实我们可以用文本相似度、检索相关度，如果有足够数据的话，还可以用神经网络的语义相似度等，来做重排序工作。这些工作也可以用多模型融合的方式来做，将多个模型的结果综合考虑得到最终结果。这些都跟搜索引擎的技术没有特别本质的区别，也会有些微小的差别，这是知识库这块的工作。</p>
+<h3 id="2-4-知识图谱"><a href="#2-4-知识图谱" class="headerlink" title="2.4 知识图谱"></a>2.4 知识图谱</h3><p>知识图谱（Knowledge Graph），在图书情报界称为知识域可视化或知识领域映射地图，是显示知识发展进程与结构关系的一系列各种不同的图形，用<a href="https://baike.baidu.com/item/可视化技术/1549548" target="_blank" rel="noopener">可视化技术</a>描述<a href="https://baike.baidu.com/item/知识资源/2336050" target="_blank" rel="noopener">知识资源</a>及其载体，挖掘、分析、<a href="https://baike.baidu.com/item/构建/8601024" target="_blank" rel="noopener">构建</a>、绘制和显示知识及它们之间的相互联系。</p>
+<p><img src="http://img.qjsmartech.com/Crawler/Images/2018-07/2018070209222106806.png" alt=""></p>
+<p>知识图谱问答最难的一点在于数据的整理，其次是工具方面。有很多开源的工具，例如：Neo4j、OrientDB、Titan。</p>
+<p>假设我们解决了数据来源和更新的问题，同时也有了工具，接下来要做的事情就是查询转换的工作。因为一般的知识图谱工具都会有一些自己的查询语言，那么我们所要做的工作实际上就是把自然语言通过某种方式转换成知识图谱的工具所支持的查询语言。</p>
+<p>查询转换也有常见的两种方式，一种是可以用模板，做一些查询转换的工作。</p>
+<h3 id="2-5-对话技术"><a href="#2-5-对话技术" class="headerlink" title="2.5 对话技术"></a>2.5 对话技术</h3><p>对话技术就是我们前面所说的任务对话等等，比较典型的有三大类：</p>
+<ol>
+<li>第一大类是一种用<strong>状态机</strong>，或者和状态机类似的填槽方式。这种方式的主要特点是将整个的对话过程抽象成一个有限状态机，每一轮对话，或者每几轮作为一种状态，随着对话状态的进行，这个状态机在不断的迁移，最终对话结束，状态机也结束。<strong>这里面的所有状态，以及所要执行的动作都是事先约定好的</strong>，所以状态机它比较适合一些场景简单的对话，对于场景复杂的对话，状态机这种方式就已经不太适应了。</li>
+<li>第二大类就是<strong>马可夫决策过程</strong>（Markov Decision Process, MDP）的方式，它和状态机的区别在于它里面增加了动作，状态机里面的动作是我们事先约定好的，是固定的动作，已经事先知道对话到了那时候，于是就固定的采取这样的动作，但是 MDP 这种方式，状态不确定，动作也不确定，所以说我的状态和动作是需要根据我的上一个状态和将要采用的动作做了以后的回馈（Reward）来进行决策的，所以说这个决策过程在特定领域里有足够的语料的时候可以做出很好的效果，但是我们得想办法去找到合适的领域，以及找到足够的语料才能做这样的事情。</li>
+<li>最后一类是<strong>端到端</strong>的模型。端到端的模型主要出发点是：我有一个问题，把问题输入到一个模型里面之后，这个模型是帮我解决了我们之前整个对话过程所有流程的所有问题，而这个模型是需要从数据里面去学习，包括自然语言处理、意图识别，包括整个系统里面方方面面的各种东西都要学习到。这个模型对于我们来说它是个黑盒，我给它一个问题，它也能给我答案，我并不需要仔细的去研究里面是怎么做得，我只需要设计训练这么一个模型就行了。</li>
+</ol>
+<p>那么这三种方式是现在的比较常见的三类对话技术，第一大类，像状态机和填槽这一类是商用系统的主流；第二大类是学术界的主流，但是工业界也在积极的尝试，有的也已经落地，或者接近落地；端到端这种模型，主要还是停留在学术界的研究阶段，我并没有看到哪一个商业系统已经做到了端到端的模型的产品化，还没有成为商用主流的技术。</p>
+<h3 id="2-6-聊天机器人"><a href="#2-6-聊天机器人" class="headerlink" title="2.6 聊天机器人"></a>2.6 聊天机器人</h3><p>在智能客服系统里面通常都会有聊天机器人的模块。这个模块主要有三种做法：</p>
+<ol>
+<li>第一种就是<strong>检索式</strong>，比如答案是事先编辑好的，并不会随便生成，在检索式里面又会分为两大类：第一类是用大量的语料和模型来训练，收集大量的语料，把问题和答案给一个神经网络的模型，用这个模型帮我去找到问题和答案之间的相关度，这样的话，就能够用大量的语料训练出聊天机器人模型，这是最常见的一种方式；</li>
+<li>第二种方式是<strong>基于规则</strong>来做，使用类似于之前介绍过的 Alice 机器人所用到的 AIML 标记语言，写大量的 pattern，以及在这个 pattern 下所需要的答案，写大量这样的人工规则就可以做一个检索式的机器人，但是这仅限于少量的小规模应用，如果需要编辑大量的规则，规则之间可能会有冲突等问题，所以主流的这种聊天机器人的方式是我们说到的第一种，用统计模型和大量的语料来训练聊天机器人。</li>
+<li>第三种是<strong>生成式的聊天机器人</strong>，我需要把我的答案直接生成出来，这种方式是需要限定在一定的领域里面。开放领域里直接生成式的聊天机器人会有一些敏感词的问题，因为语料一般是网上收集的，想做到所有语料都人工审核成本是巨大的。所以说生成式需要把它限定在一个特定的领域里面，生成式分为两种：一种是纯粹的生成，一种是基于一些模板来生成。</li>
+</ol>
+<h2 id="3-整体架构"><a href="#3-整体架构" class="headerlink" title="3. 整体架构"></a>3. 整体架构</h2><p>整体技术架构如下图所示，包括<strong>基础服务层、应用服务层、编辑运营层、接入层以及在线客服系统。</strong>基础服务层提供对话系统的基础技术能力，系统需要对用户输入的一段语句进行理解，这里需要自然语言理解模块，对语句进行分词、词性标注、实体识别、关键词抽取和句法分析等；同时需要识别用户的意图，包括通用意图和业务意图，通用意图是指用户是来做业务咨询还是闲聊，业务意图是指若用户是做业务咨询，具体咨询什么业务，这里会使用文本分类的技术去识别用户意图。</p>
+<p><img src="https://gitee.com/kkweishe/images/raw/master/ML/2019-9-8_22-12-20.png" alt=""></p>
+<p>基础服务之上是应用服务层，这一层具体实现了KB-Bot基于问答知识库的机器人、Task-Bot任务对话型机器和Chat-Bot闲聊类型机器人，这是智能客服系统的三种核心能力。编辑运营层是指有一个编辑团队支撑算法策略迭代，主要完成数据标注、问答运营、数据分析和效果评估的工作，这些工作输出会作用到基础服务层和应用服务层。基于应用服务层，对外提供通用的接口服务以便于业务方接入。此外，机器不是万能的，用户有很多复杂的问题仍需要人工解决，这里有一套在线客服系统提供了人工在线客服的能力，应用服务层会和这套在线客服系统做无缝对接。</p>
+<h2 id="4-评价体系"><a href="#4-评价体系" class="headerlink" title="4. 评价体系"></a>4. 评价体系</h2><p>智能客服系统需要有一个完备的评价体系去评价它的好坏，在我们的评价体系中有基于人工标注的评价和基于用户反馈的评价两种方式：</p>
+<ol>
+<li><p><strong>基于人工标注的评价</strong></p>
+<p>系统的回答能力受限于知识库的丰富程度，因此并非能回答用户的所有问题，系统最佳的状态是将能回答的全部回答准确，不能回答的全部拒识，即拒绝回答。因此这里的<strong>评价指标包括有结果率、拒识率、召回率和准确率等</strong>，我们的目标是让系统的有结果率无限接近数据的真实有结果率，召回率和准确率尽量高。这里我们是通过标注标准评测集来计算系统的各项指标，我们会从每日的全量数据集中抽样出一个小数据集，保证小数据集的数据分布尽量符合全量数据集，然后由标注团队对数据集做标注，标注出每个问题的实际答案，一般标注完成后还有质检的环节，以保证标注结果尽量准确，这样便生成了每日数据的标准评测集。基于该标准评测集我们会去评价系统的好坏，并且每次做新模型迭代时都会使用标准评测集去评价新模型，只有新模型的效果好了才允许上线。</p>
+</li>
+<li><p><strong>基于用户反馈的评价</strong></p>
+<p>人工评价能够评价智能客服系统的准确率，但是答案是否合理，能否为用户解决问题，需要用户去反馈评价，整个智能客服系统的最终目标是帮助用户解决问题。我们会在产品上设计智能客服和在线客服的评价功能，例如会让用户评价智能客服的每个答案或者某次会话，在和人工客服聊天完毕会发送评价卡片给用户去评价满意度。最终我们会统计参评比例、满意度等指标，这些指标能够真正反应智能客服系统的好坏。实际中往往用户参评比例低，我们会使用各种方法去刺激用户评价。</p>
+</li>
+</ol>
+<h2 id="5-参考文献"><a href="#5-参考文献" class="headerlink" title="5. 参考文献"></a>5. 参考文献</h2><p><a href="http://www.sohu.com/a/228122295_355140" target="_blank" rel="noopener">15年研发经验博士手把手教学：从零开始搭建智能客服 </a></p>
+<hr>
+<blockquote>
+<p>作者:<a href="https://github.com/NLP-LOVE/ML-NLP" target="_blank" rel="noopener">@mantchs</a></p>
+<p>GitHub:<a href="https://github.com/NLP-LOVE/ML-NLP" target="_blank" rel="noopener">https://github.com/NLP-LOVE/ML-NLP</a></p>
+<p>欢迎大家加入讨论！共同完善此项目！群号:【541954936】<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=863f915b9178560bd32ca07cd090a7d9e6f5f90fcff5667489697b1621cecdb3"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="NLP面试学习群" title="NLP面试学习群"></a></p>
+</blockquote>
+
+      </div>
+      
+      
+        <br>
+        
+
+
+  <section class='meta' id="footer-meta">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-12-25T14:15:36+08:00">
+  <a class='notlink'>
+    <i class="fas fa-clock" aria-hidden="true"></i>
+    <p>更新于 2019年12月25日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
+          
+          href="http://connect.qq.com/widget/shareqq/index.html?url=http://reverent-montalcini-17e4bf.netlify.com/2019/09/30/NLP/Intelligent%20Customer%20Service/&title=【NLP】智能客服 | mantch的博客&pics=https://gitee.com/kkweishe/images/raw/master/ML/2019-12-24_15-51-11.png&summary=我们就会产生一个想法：能不能有一个机器人来回答这些重复的问题，它能 24 小时的工作不用休息，降低客户成本，还能挖掘聊天记录里面的一些有价值的知识点。这就是智能客服产生的背景。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
+          
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://reverent-montalcini-17e4bf.netlify.com/2019/09/30/NLP/Intelligent%20Customer%20Service/&title=【NLP】智能客服 | mantch的博客&pics=https://gitee.com/kkweishe/images/raw/master/ML/2019-12-24_15-51-11.png&summary=我们就会产生一个想法：能不能有一个机器人来回答这些重复的问题，它能 24 小时的工作不用休息，降低客户成本，还能挖掘聊天记录里面的一些有价值的知识点。这就是智能客服产生的背景。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
+          
+          href="http://service.weibo.com/share/share.php?url=http://reverent-montalcini-17e4bf.netlify.com/2019/09/30/NLP/Intelligent%20Customer%20Service/&title=【NLP】智能客服 | mantch的博客&pics=https://gitee.com/kkweishe/images/raw/master/ML/2019-12-24_15-51-11.png&summary=我们就会产生一个想法：能不能有一个机器人来回答这些重复的问题，它能 24 小时的工作不用休息，降低客户成本，还能挖掘聊天记录里面的一些有价值的知识点。这就是智能客服产生的背景。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </section>
+
+
+      
+      
+          <div class="prev-next">
+              
+              
+                  <section class="next">
+                      <span class="art-item-right" aria-hidden="true">
+                          <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                          <h4>
+                              <a href="/2019/09/30/NLP/XLNet/" rel="prev" title="【NLP】XLNet">
+                                  
+                                      【NLP】XLNet
+                                  
+                              </a>
+                          </h4>
+                          
+                      </span>
+                  </section>
+              
+          </div>
+      
+    </section>
+  </article>
+
+
+
+  <!-- 显示推荐文章和评论 -->
+
+
+
+  <article class="post white-box comments">
+    <section class="article typo">
+      <h4><i class="fas fa-comments fa-fw" aria-hidden="true"></i>&nbsp;评论</h4>
+      
+      
+      
+        <section id="comments">
+          <div id="gitalk-container"></div>
+        </section>
+      
+      
+    </section>
+  </article>
+
+
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+  <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX","TeX"],
+      linebreaks: { automatic:true },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: { autoNumber: "AMS" },
+      noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+      Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += (all[i].SourceElement().parentNode.className ? ' ' : '') + 'has-jax';
+    }
+  });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+
+  <script>
+    window.subData = {
+      title: '【NLP】智能客服',
+      tools: true
+    }
+  </script>
+
+
+</div>
+<aside class='l_side'>
+  
+    
+    
+      
+      
+        
+          
+          
+            
+              <section class='widget author'>
+  <div class='content pure'>
+    
+      <div class='avatar'>
+        <img class='avatar' src='https://gitee.com/kkweishe/images/raw/master/ML/2019-12-24_16-7-39.png'/>
+      </div>
+    
+    
+      <div class='text'>
+        
+        
+        
+          <p><span id="jinrishici-sentence">mantch的博客</span></p>
+          <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+        
+      </div>
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="mailto:mantchs@163.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://github.com/NLP-LOVE"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+            
+              <section class='widget plain'>
+  
+<header class='pure'>
+  <div><i class="fas fa-file fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;AI-Area</div>
+  
+</header>
+
+  <div class='content pure'>
+    <p>微信公众号(最新文章分享)，请关注!<br><img src="https://gitee.com/kkweishe/images/raw/master/ML/2019-12-24_16-17-47.png" alt=""></p>
+
+  </div>
+</section>
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            
+              
+  <section class='widget toc-wrapper'>
+    
+<header class='pure'>
+  <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;本文目录</div>
+  
+    <!-- <div class='wrapper'><a class="s-toc rightBtn" rel="external nofollow noopener noreferrer" href="javascript:void(0)"><i class="fas fa-thumbtack fa-fw"></i></a></div> -->
+  
+</header>
+
+    <div class='content pure'>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-智能客服系统"><span class="toc-text">1. 智能客服系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-智能客服的目标"><span class="toc-text">1.1 智能客服的目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-细分领域"><span class="toc-text">1.2 细分领域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-智能客服常见功能"><span class="toc-text">1.3 智能客服常见功能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-智能客服的工作原理"><span class="toc-text">2. 智能客服的工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-自然语言理解"><span class="toc-text">2.1 自然语言理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-意图识别"><span class="toc-text">2.2 意图识别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-知识库"><span class="toc-text">2.3 知识库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-知识图谱"><span class="toc-text">2.4 知识图谱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-对话技术"><span class="toc-text">2.5 对话技术</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-聊天机器人"><span class="toc-text">2.6 聊天机器人</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-整体架构"><span class="toc-text">3. 整体架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-评价体系"><span class="toc-text">4. 评价体系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-参考文献"><span class="toc-text">5. 参考文献</span></a></li></ol>
+    </div>
+  </section>
+
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            
+              <section class='widget grid'>
+  
+<header class='pure'>
+  <div><i class="fas fa-map-signs fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;站内导航</div>
+  
+</header>
+
+  <div class='content pure'>
+    <ul class="grid navgation">
+      
+        <li><a class="flat-box" title="/" href="/"
+          
+          
+          id="home">
+          
+            <i class="fas fa-clock fa-fw" aria-hidden="true"></i>
+          
+          近期文章
+        </a></li>
+      
+        <li><a class="flat-box" title="/archives/" href="/archives/"
+          
+            rel="nofollow"
+          
+          
+          id="archives">
+          
+            <i class="fas fa-archive fa-fw" aria-hidden="true"></i>
+          
+          文章归档
+        </a></li>
+      
+        <li><a class="flat-box" title="/projects/mantch/" href="/projects/mantch/"
+          
+          
+          id="projectsmantch">
+          
+            <i class="fas fa-code-branch fa-fw" aria-hidden="true"></i>
+          
+          项目&资源
+        </a></li>
+      
+        <li><a class="flat-box" title="/friends/" href="/friends/"
+          
+            rel="nofollow"
+          
+          
+          id="friends">
+          
+            <i class="fas fa-link fa-fw" aria-hidden="true"></i>
+          
+          我的友链
+        </a></li>
+      
+        <li><a class="flat-box" title="https://xaoxuu.com/wiki/material-x/" href="https://xaoxuu.com/wiki/material-x/"
+          
+            rel="nofollow"
+          
+          
+          id="https:xaoxuu.comwikimaterial-x">
+          
+            <i class="fas fa-book fa-fw" aria-hidden="true"></i>
+          
+          主题文档
+        </a></li>
+      
+        <li><a class="flat-box" title="/about/mantch/" href="/about/mantch/"
+          
+            rel="nofollow"
+          
+          
+          id="aboutmantch">
+          
+            <i class="fas fa-info-circle fa-fw" aria-hidden="true"></i>
+          
+          关于小站
+        </a></li>
+      
+    </ul>
+  </div>
+</section>
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            
+              
+  <section class='widget category'>
+    
+<header class='pure'>
+  <div><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;文章分类</div>
+  
+    <a class="rightBtn"
+    
+      rel="nofollow"
+    
+    
+    href="/blog/categories/"
+    title="blog/categories/">
+    <i class="fas fa-expand-arrows-alt fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      <ul class="entry">
+        
+          <li><a class="flat-box" title="/categories/NLP/" href="/categories/NLP/"><div class='name'>NLP</div><div class='badge'>(11)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F/" href="/categories/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F/"><div class='name'>推荐系统</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"><div class='name'>机器学习</div><div class='badge'>(15)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><div class='name'>深度学习</div><div class='badge'>(8)</div></a></li>
+        
+      </ul>
+    </div>
+  </section>
+
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            
+              
+
+            
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+    
+
+  
+</aside>
+
+<footer id="footer" class="clearfix">
+  
+  
+    <div class="social-wrapper">
+      
+        
+          <a href="mailto:mantchs@163.com"
+            class="social fas fa-envelope flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://github.com/NLP-LOVE"
+            class="social fab fa-github flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+    </div>
+  
+  <br>
+  <div><p>博客内容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+  <div>
+    本站使用
+    <a href="https://xaoxuu.com/wiki/material-x/" target="_blank" class="codename">Material X</a>
+    作为主题
+    
+      ，
+      总访问量为
+      <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
+      次
+    
+    。
+  </div>
+</footer>
+<script>setLoadingBarProgress(80);</script>
+
+
+
+
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+    <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)'></a>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+
+  <script>
+    var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+    var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+    var ALGOLIA_API_KEY = "";
+    var ALGOLIA_APP_ID = "";
+    var ALGOLIA_INDEX_NAME = "";
+    var AZURE_SERVICE_NAME = "";
+    var AZURE_INDEX_NAME = "";
+    var AZURE_QUERY_KEY = "";
+    var BAIDU_API_ID = "";
+    var SEARCH_SERVICE = "hexo" || "hexo";
+    var ROOT = "/"||"/";
+    if(!ROOT.endsWith('/'))ROOT += '/';
+  </script>
+
+<script src="//instant.page/1.2.2" type="module" integrity="sha384-2xV8M5griQmzyiY3CDqh1dn4z3llDVqZDqzjzcY+jCBCk/a5fXJmuZ/40JJAPeoU"></script>
+
+
+  <script async src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.5/dist/scrollreveal.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      const $reveal = $('.reveal');
+      if ($reveal.length === 0) return;
+      const sr = ScrollReveal({ distance: 0 });
+      sr.reveal('.reveal');
+    });
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+  
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        if ('.cover') {
+          $('.cover').backstretch(
+          ["https://img.vim-cn.com/29/91197b04c13f512f734a76d4ac422d89dbe229.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        } else {
+          $.backstretch(
+          ["https://img.vim-cn.com/29/91197b04c13f512f734a76d4ac422d89dbe229.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: "9e843f5ca6489d3dafe8",
+      clientSecret: "4c4ecc0dc9d3f67c295c96945ada3ad65fe6d3d5",
+      repo: "blog-comment",
+      owner: "NLP-LOVE",
+      admin: "NLP-LOVE",
+      
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+      
+      distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+    gitalk.render('gitalk-container');
+  </script>
+
+
+
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+  
+<script src="/js/search.js"></script>
+
+
+
+
+
+<!-- 复制 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  let COPY_SUCCESS = "复制成功";
+  let COPY_FAILURE = "复制失败";
+  /*页面载入完成后，创建复制按钮*/
+  !function (e, t, a) {
+    /* code */
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '  <i class="fa fa-copy"></i><span>复制</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+
+      clipboard.on('success', function(e) {
+        //您可以加入成功提示
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+        success_prompt(COPY_SUCCESS);
+        e.clearSelection();
+      });
+      clipboard.on('error', function(e) {
+        //您可以加入失败提示
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+        fail_prompt(COPY_FAILURE);
+      });
+    }
+    initCopyCode();
+
+  }(window, document);
+
+  /**
+   * 弹出式提示框，默认1.5秒自动消失
+   * @param message 提示信息
+   * @param style 提示样式，有alert-success、alert-danger、alert-warning、alert-info
+   * @param time 消失时间
+   */
+  var prompt = function (message, style, time)
+  {
+      style = (style === undefined) ? 'alert-success' : style;
+      time = (time === undefined) ? 1500 : time*1000;
+      $('<div>')
+          .appendTo('body')
+          .addClass('alert ' + style)
+          .html(message)
+          .show()
+          .delay(time)
+          .fadeOut();
+  };
+
+  // 成功提示
+  var success_prompt = function(message, time)
+  {
+      prompt(message, 'alert-success', time);
+  };
+
+  // 失败提示
+  var fail_prompt = function(message, time)
+  {
+      prompt(message, 'alert-danger', time);
+  };
+
+  // 提醒
+  var warning_prompt = function(message, time)
+  {
+      prompt(message, 'alert-warning', time);
+  };
+
+  // 信息提示
+  var info_prompt = function(message, time)
+  {
+      prompt(message, 'alert-info', time);
+  };
+
+</script>
+
+
+<!-- fancybox -->
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  let LAZY_LOAD_IMAGE = "";
+  $(".article-entry").find("fancybox").find("img").each(function () {
+      var element = document.createElement("a");
+      $(element).attr("data-fancybox", "gallery");
+      $(element).attr("href", $(this).attr("src"));
+      /* 图片采用懒加载处理时,
+       * 一般图片标签内会有个属性名来存放图片的真实地址，比如 data-original,
+       * 那么此处将原本的属性名src替换为对应属性名data-original,
+       * 修改如下
+       */
+       if (LAZY_LOAD_IMAGE) {
+         $(element).attr("href", $(this).attr("data-original"));
+       }
+      $(this).wrap(element);
+  });
+</script>
+
+
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+</body>
+</html>

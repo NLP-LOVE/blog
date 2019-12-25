@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>【深度学习】卷积神经网络(CNN) | mantch的博客</title>
+  
+  
+
+  
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- meta -->
+  
+
+  <!-- link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.10.1/css/all.min.css">
+  
+
+  
+  <link rel="shortcut icon" type='image/x-icon' href="https://gitee.com/kkweishe/images/raw/master/ML/2019-12-24_15-43-44.png">
+  
+
+  
+    
+<link rel="stylesheet" href="/style.css">
+
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+
+  
+  
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  
+  
+  <div class="cover-wrapper">
+    <cover class='cover post half'>
+      
+        
+  <h1 class='title'>mantch</h1>
+
+
+  <div class="m_search">
+    <form name="searchform" class="form u-search-form">
+      <input type="text" class="input u-search-input" placeholder="" />
+      <i class="icon fas fa-search fa-fw"></i>
+    </form>
+  </div>
+
+<div class='menu navgation'>
+  <ul class='h-list'>
+    
+      
+        <li>
+          <a class="nav home" href="/"
+            
+            
+            id="home">
+            <i class='fas fa-rss fa-fw'></i>&nbsp;博文
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/categories/"
+            
+            
+            id="categories">
+            <i class='fas fa-folder-open fa-fw'></i>&nbsp;分类
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/projects/mantch/"
+            
+            
+            id="projectsmantch">
+            <i class='fas fa-code-branch fa-fw'></i>&nbsp;项目&amp;资源
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/about/mantch/"
+            
+              rel="nofollow"
+            
+            
+            id="aboutmantch">
+            <i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+          </a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+      
+    </cover>
+    <header class="l_header pure">
+  <div id="loading-bar-wrapper">
+    <div id="loading-bar" class="pure"></div>
+  </div>
+
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+      <a class="logo flat-box" href='/' >
+        
+          mantch的博客
+        
+      </a>
+			<div class='menu navgation'>
+				<ul class='h-list'>
+          
+  					
+  						<li>
+								<a class="nav flat-box" href="/categories/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="categories">
+									<i class='fas fa-folder-open fa-fw'></i>&nbsp;分类
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/tags/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="tags">
+									<i class='fas fa-hashtag fa-fw'></i>&nbsp;标签
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/archives/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="archives">
+									<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+								</a>
+							</li>
+      			
+      		
+				</ul>
+			</div>
+
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="搜索" />
+						<i class="icon fas fa-search fa-fw"></i>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a class="fas fa-search fa-fw" href='javascript:void(0)'></a></li>
+				
+				<li class='s-menu'><a class="fas fa-bars fa-fw" href='javascript:void(0)'></a></li>
+			</ul>
+		</div>
+
+		<div class='nav-sub container container--flex'>
+			<a class="logo flat-box"></a>
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a class="flat-btn fas fa-comments fa-fw" href='javascript:void(0)'></a></li>
+        
+          <li class='s-toc'><a class="flat-btn fas fa-list fa-fw" href='javascript:void(0)'></a></li>
+        
+			</ul>
+		</div>
+	</div>
+</header>
+	<aside class="menu-phone">
+    <header>
+		<nav class="menu navgation">
+      <ul>
+        
+          
+            <li>
+							<a class="nav flat-box" href="/"
+                
+                
+                id="home">
+								<i class='fas fa-clock fa-fw'></i>&nbsp;近期文章
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/archives/"
+                
+                  rel="nofollow"
+                
+                
+                id="archives">
+								<i class='fas fa-archive fa-fw'></i>&nbsp;文章归档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/projects/mantch/"
+                
+                
+                id="projectsmantch">
+								<i class='fas fa-code-branch fa-fw'></i>&nbsp;项目&amp;资源
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/friends/"
+                
+                  rel="nofollow"
+                
+                
+                id="friends">
+								<i class='fas fa-link fa-fw'></i>&nbsp;我的友链
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="https://xaoxuu.com/wiki/material-x/"
+                
+                  rel="nofollow"
+                
+                
+                id="https:xaoxuu.comwikimaterial-x">
+								<i class='fas fa-book fa-fw'></i>&nbsp;主题文档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/about/mantch/"
+                
+                  rel="nofollow"
+                
+                
+                id="aboutmantch">
+								<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于小站
+							</a>
+            </li>
+          
+       
+      </ul>
+		</nav>
+    </header>
+	</aside>
+<script>setLoadingBarProgress(40);</script>
+
+  </div>
+
+
+  <div class="l_body">
+    <div class='body-wrapper'>
+      <div class='l_main'>
+  
+
+  <article id="post" class="post white-box article-type-post" itemscope itemprop="blogPost">
+    
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  
+    <h1 class="title">
+      <a href="/2019/08/11/DL/CNN/">
+        【深度学习】卷积神经网络(CNN)
+      </a>
+    </h1>
+  
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+  <div class='new-meta-item author'>
+    
+      <a href="http://reverent-montalcini-17e4bf.netlify.com" rel="nofollow">
+        
+          <img src="https://gitee.com/kkweishe/images/raw/master/ML/2019-12-24_15-51-11.png">
+        
+        <p>mantch</p>
+      </a>
+    
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+    <p>2019-08-11</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>深度学习</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            
+  
+    <div class="new-meta-item browse busuanzi">
+      <a class='notlink'>
+        <i class="fas fa-eye" aria-hidden="true"></i>
+        <p>
+          <span id="busuanzi_value_page_pv">
+            <i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
+          </span>
+        </p>
+      </a>
+    </div>
+  
+
+
+          
+        
+          
+            
+  
+    <div class="new-meta-item wordcount">
+      <a class='notlink'>
+        <i class="fas fa-keyboard" aria-hidden="true"></i>
+        <p>字数统计:</p>
+        <p>5k字</p>
+      </a>
+    </div>
+    <div class="new-meta-item readtime">
+      <a class='notlink'>
+        <i class="fas fa-hourglass-half" aria-hidden="true"></i>
+        <p>阅读时长≈</p>
+        <p>17分</p>
+      </a>
+    </div>
+  
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+    <section class="article typo">
+      <div class="article-entry" itemprop="articleBody">
+        <p>上图中CNN要做的事情是：给定一张图片，是车还是马未知，是什么车也未知，现在需要模型判断这张图片里具体是一个什么东西，总之输出一个结果：如果是车 那是什么车。 这几个部分中，卷积计算层是CNN的核心。 在做输入的时候，需要把图片处理成同样大小的图片才能够进行处理。 <strong>TIPS:</strong>在训练集和测试…</p>
+<a id="more"></a>
+
+<h2 id="1-什么是CNN"><a href="#1-什么是CNN" class="headerlink" title="1. 什么是CNN"></a>1. 什么是CNN</h2><blockquote>
+<p>卷积神经网络（Convolutional Neural Networks, CNN）是一类包含<a href="https://baike.baidu.com/item/卷积/9411006" target="_blank" rel="noopener">卷积</a>计算且具有深度结构的<a href="https://baike.baidu.com/item/前馈神经网络/7580523" target="_blank" rel="noopener">前馈神经网络</a>（Feedforward Neural Networks），是<a href="https://baike.baidu.com/item/深度学习/3729729" target="_blank" rel="noopener">深度学习</a>（deep learning）的代表算法之一。</p>
+</blockquote>
+<p>我们先来看卷积神经网络各个层级结构图：</p>
+<p><img src="http://wx2.sinaimg.cn/mw690/00630Defgy1g5pqv7pv9uj30yv0gpn1e.jpg" alt=""></p>
+<p>上图中CNN要做的事情是：给定一张图片，是车还是马未知，是什么车也未知，现在需要模型判断这张图片里具体是一个什么东西，总之输出一个结果：如果是车那是什么车。</p>
+<ul>
+<li>最左边是数据<strong>输入层</strong>(input layer)，对数据做一些处理，比如去均值（把输入数据各个维度都中心化为0，避免数据过多偏差，影响训练效果）、归一化（把所有的数据都归一到同样的范围）、PCA/白化等等。CNN只对训练集做“去均值”这一步。</li>
+<li>CONV：卷积计算层(conv layer)，线性乘积求和。</li>
+<li>RELU：激励层(activation layer)，下文有提到：ReLU是激活函数的一种。</li>
+<li>POOL：池化层(pooling layer)，简言之，即取区域平均或最大。</li>
+<li>FC：全连接层(FC layer)。</li>
+</ul>
+<p>这几个部分中，卷积计算层是CNN的核心。</p>
+<h3 id="1-1-输入层"><a href="#1-1-输入层" class="headerlink" title="1.1 输入层"></a>1.1 输入层</h3><p>在做输入的时候，需要把图片处理成同样大小的图片才能够进行处理。</p>
+<p>常见的处理数据的方式有：</p>
+<ol>
+<li><p>去均值(<strong>常用</strong>)</p>
+<ul>
+<li><strong>AlexNet</strong>：训练集中100万张图片，对每个像素点求均值，得到均值图像，当训练时用原图减去均值图像。</li>
+<li><strong>VGG</strong>：对所有输入在三个颜色通道R/G/B上取均值，只会得到3个值，当训练时减去对应的颜色通道均值。(<strong>此种方法效率高</strong>)</li>
+</ul>
+<p><strong>TIPS:</strong>在训练集和测试集上减去训练集的均值。</p>
+</li>
+<li><p>归一化</p>
+<p>幅度归一化到同样的范围。</p>
+</li>
+<li><p>PCA/白化(<strong>很少用</strong>)</p>
+<ul>
+<li>用PCA降维</li>
+<li>白化是对数据每个特征轴上的幅度归一化。</li>
+</ul>
+</li>
+</ol>
+<h3 id="1-2-卷积计算层-conv"><a href="#1-2-卷积计算层-conv" class="headerlink" title="1.2 卷积计算层(conv)"></a>1.2 卷积计算层(conv)</h3><p>对图像（不同的数据窗口数据）和滤波矩阵（一组固定的权重：因为每个神经元的多个权重固定，所以又可以看做一个恒定的滤波器filter）做<strong>内积</strong>（逐个元素相乘再求和）的操作就是所谓的『卷积』操作，也是卷积神经网络的名字来源。</p>
+<p>滤波器filter是什么呢！请看下图。图中左边部分是原始输入数据，图中中间部分是滤波器filter，图中右边是输出的新的二维数据。</p>
+<p><img src="https://ws3.sinaimg.cn/large/00630Defgy1g2djuqln1xj30i80dy104.jpg" alt="image"></p>
+<p>不同的滤波器filter会得到不同的输出数据，比如颜色深浅、轮廓。<strong>相当于提取图像的不同特征，模型就能够学习到多种特征。</strong>用不同的滤波器filter，提取想要的关于图像的特定信息：颜色深浅或轮廓。如下图所示。</p>
+<p><img src="http://wx3.sinaimg.cn/mw690/00630Defgy1g5r30db3jpj30hv0b1wq3.jpg" alt=""></p>
+<p>在CNN中，滤波器filter（带着一组固定权重的神经元）对局部输入数据进行卷积计算。每计算完一个数据窗口内的局部数据后，数据窗口不断平移滑动，直到计算完所有数据。这个过程中，有这么几个参数： </p>
+<ul>
+<li>深度depth：神经元个数，决定输出的depth厚度。同时代表滤波器个数。</li>
+<li>步长stride：决定滑动多少步可以到边缘。</li>
+<li>填充值zero-padding：在外围边缘补充若干圈0，方便从初始位置以步长为单位可以刚好滑倒末尾位置，通俗地讲就是为了总长能被步长整除。 </li>
+</ul>
+<p><img src="http://wx3.sinaimg.cn/mw690/00630Defgy1g5r34yi6p4j308g05baaj.jpg" alt=""></p>
+<p><img src="https://mlnotebook.github.io/img/CNN/convSobel.gif" alt=""></p>
+<ul>
+<li><p><strong>参数共享机制</strong></p>
+<p>假设每个神经元连接数据窗的权重是固定对的。固定每个神经元连接权重，可以看做模板，每个神经元只关注<strong>一个特性(模板)</strong>，这使得需要估算的权重个数减少：一层中从1亿到3.5万。</p>
+</li>
+<li><p>一组固定的权重和不同窗口内数据做<strong>内积</strong>：卷积</p>
+</li>
+<li><p>作用在于捕捉某一种模式，具体表现为很大的值。</p>
+</li>
+</ul>
+<p><strong>卷积操作的本质特性包括稀疏交互和参数共享</strong>。</p>
+<h3 id="1-3-激励层"><a href="#1-3-激励层" class="headerlink" title="1.3 激励层"></a>1.3 激励层</h3><p>把卷积层输出结果做非线性映射。</p>
+<p>激活函数有：</p>
+<p><img src="https://i.loli.net/2019/04/24/5cbff6153eef3.png" alt="UTOOLS1556084241657.png"></p>
+<ul>
+<li>sigmoid：在两端斜率接近于0，梯度消失。</li>
+<li>ReLu：修正线性单元，有可能出现斜率为0，但概率很小，因为mini-batch是一批样本损失求导之和。</li>
+</ul>
+<p><strong>TIPS:</strong></p>
+<ul>
+<li>CNN慎用sigmoid！慎用sigmoid！慎用sigmoid！</li>
+<li>首先试RELU，因为快，但要小心点。</li>
+<li>如果RELU失效，请用 Leaky ReLU或者Maxout。</li>
+<li>某些情况下tanh倒是有不错的结果，但是很少。</li>
+</ul>
+<h3 id="1-4-池化层"><a href="#1-4-池化层" class="headerlink" title="1.4 池化层"></a>1.4 池化层</h3><p>也叫<strong>下采样层</strong>，就算通过了卷积层，纬度还是很高 ，需要进行池化层操作。</p>
+<ul>
+<li>夹在连续的卷积层中间。</li>
+<li>压缩数据和参数的量，降低维度。</li>
+<li>减小过拟合。</li>
+<li>具有特征不变性。</li>
+</ul>
+<p>方式有：<strong>Max pooling、average pooling</strong></p>
+<p><img src="https://ws1.sinaimg.cn/large/00630Defgy1g2doejs89ej30ez0dhdj1.jpg" alt="image"></p>
+<p><strong>Max pooling</strong></p>
+<p>取出每个部分的最大值作为输出，例如上图左上角的4个黄色方块取最大值为3作为输出，以此类推。</p>
+<p><strong>average pooling</strong></p>
+<p>每个部分进行计算得到平均值作为输出，例如上图左上角的4个黄色方块取得平均值2作为输出，以此类推。</p>
+<h3 id="1-5-全连接层"><a href="#1-5-全连接层" class="headerlink" title="1.5 全连接层"></a>1.5 全连接层</h3><p>全连接层的每一个结点都与上一层的所有结点相连，用来把前边提取到的特征综合起来。由于其全连接的特性，一般全连接层的参数也是最多的。</p>
+<ul>
+<li>两层之间所有神经元都有权重连接</li>
+<li>通常全连接层在卷积神经网络尾部</li>
+</ul>
+<h3 id="1-6-层次结构小结"><a href="#1-6-层次结构小结" class="headerlink" title="1.6 层次结构小结"></a>1.6 层次结构小结</h3><table>
+<thead>
+<tr>
+<th>CNN层次结构</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>输入层</td>
+<td>卷积网络的原始输入，可以是原始或预处理后的像素矩阵</td>
+</tr>
+<tr>
+<td>卷积层</td>
+<td>参数共享、局部连接，利用平移不变性从全局特征图提取局部特征</td>
+</tr>
+<tr>
+<td>激活层</td>
+<td>将卷积层的输出结果进行非线性映射</td>
+</tr>
+<tr>
+<td>池化层</td>
+<td>进一步筛选特征，可以有效减少后续网络层次所需的参数量</td>
+</tr>
+<tr>
+<td>全连接层</td>
+<td>用于把该层之前提取到的特征综合起来。</td>
+</tr>
+</tbody></table>
+<h3 id="1-7-CNN优缺点"><a href="#1-7-CNN优缺点" class="headerlink" title="1.7 CNN优缺点"></a>1.7 CNN优缺点</h3><p><strong>优点：</strong></p>
+<ul>
+<li>共享卷积核，优化计算量。</li>
+<li>无需手动选取特征，训练好权重，即得特征。</li>
+<li>深层次的网络抽取图像信息丰富，表达效果好。</li>
+<li>保持了层级网络结构。</li>
+<li>不同层次有不同形式与功能。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>需要调参，需要大样本量，GPU等硬件依赖。</li>
+<li>物理含义不明确。</li>
+</ul>
+<p><strong>与NLP/Speech共性：</strong></p>
+<p>都存在局部与整体的关系，由低层次的特征经过组合，组成高层次的特征，并且得到不同特征之间的空间相关性。</p>
+<h2 id="2-典型CNN发展历程"><a href="#2-典型CNN发展历程" class="headerlink" title="2. 典型CNN发展历程"></a>2. 典型CNN发展历程</h2><ul>
+<li>LeNet，这是最早用于数字识别的CNN </li>
+<li>AlexNet， 2012 ILSVRC比赛远超第2名的CNN，比LeNet更深，用多层小卷积层叠加替换单大卷积层。 </li>
+<li>ZF Net， 2013 ILSVRC比赛冠军 </li>
+<li>GoogLeNet， 2014 ILSVRC比赛冠军 </li>
+<li>VGGNet， 2014 ILSVRC比赛中的模型，图像识别略差于GoogLeNet，但是在很多图像转化学习问题(比如objectdetection)上效果很好 </li>
+<li>ResNet(深度残差网络（Deep Residual Network，ResNet）)， 2015ILSVRC比赛冠军，结构修正(残差学习)以适应深层次CNN训练。 </li>
+<li>DenseNet， CVPR2017 best paper，把ResNet的add变成concat </li>
+</ul>
+<h2 id="3-图像相关任务"><a href="#3-图像相关任务" class="headerlink" title="3. 图像相关任务"></a>3. 图像相关任务</h2><p><img src="https://ws1.sinaimg.cn/large/00630Defly1g2lmm3f2e5j30wj0clwtx.jpg" alt="image"></p>
+<h3 id="3-1-图像识别与定位"><a href="#3-1-图像识别与定位" class="headerlink" title="3.1 图像识别与定位"></a>3.1 图像识别与定位</h3><ol>
+<li><p><strong>classification：</strong>C个类别识别</p>
+<ul>
+<li><strong>input</strong>：Image</li>
+<li><strong>Output</strong>：类别标签</li>
+<li><strong>Evaluation metric</strong>：准确率</li>
+</ul>
+</li>
+<li><p><strong>Localization定位)</strong></p>
+<ul>
+<li><p><strong>Input</strong>：Image</p>
+</li>
+<li><p><strong>Output</strong>：物体边界框(x,y,w,h)</p>
+</li>
+<li><p><strong>Evaluation metric</strong>：交并准则(IOU) &gt; 0.5   图中阴影部分所占面积</p>
+<p><img src="https://ws1.sinaimg.cn/large/00630Defly1g2lmuahlsoj30df08rweb.jpg" alt="image"></p>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="3-1-1-思路1：识别-定位过程"><a href="#3-1-1-思路1：识别-定位过程" class="headerlink" title="3.1.1 思路1：识别+定位过程"></a>3.1.1 思路1：识别+定位过程</h4><ol>
+<li><p><strong>识别</strong>可以看作多分类问题(<strong>用softmax</strong>)，用别人训练好的CNN模型做fine-tune</p>
+</li>
+<li><p><strong>定位</strong>的目标是(x,y,w,h)是连续值，当回归问题解决(<strong>mse</strong>)</p>
+<p>在<strong>1</strong>的CNN尾部展开(例如把最后一层拿开)，接上一个(x,y,w,h)的神经网络，成为<strong>classification+regression的模型</strong>。</p>
+<p>更细致的识别可以提前规定好有k个组成部分，做成k个部分的回归，</p>
+<p><strong>例如：</strong>框出两只眼睛和两条腿，4元祖*4=16(个连续值)</p>
+</li>
+<li><p>Regression部分用欧氏距离损失，使用SGD训练。</p>
+</li>
+</ol>
+<p><img src="https://julyedu-img-public.oss-cn-beijing.aliyuncs.com/Public/Image/Question/1517393046_527.png" alt="image"></p>
+<h4 id="3-1-2-思路2：图窗-识别"><a href="#3-1-2-思路2：图窗-识别" class="headerlink" title="3.1.2 思路2：图窗+识别"></a>3.1.2 思路2：图窗+识别</h4><ul>
+<li>类似刚才的classification+regression思路</li>
+<li>咱们取不同大小的“框”</li>
+<li>让框出现在不同的位置</li>
+<li>判定得分</li>
+<li>按照得分的高低对“结果框”做抽样和合并</li>
+</ul>
+<p><img src="http://wx1.sinaimg.cn/mw690/00630Defgy1g5r50m0d5wj30ow0e1dpg.jpg" alt=""></p>
+<h3 id="3-2-物体检测-object-detection"><a href="#3-2-物体检测-object-detection" class="headerlink" title="3.2 物体检测(object detection)"></a>3.2 物体检测(object detection)</h3><h4 id="3-2-1-过程"><a href="#3-2-1-过程" class="headerlink" title="3.2.1 过程"></a>3.2.1 过程</h4><p>当图像有很多物体怎么办的？难度可是一下暴增啊。</p>
+<p>那任务就变成了：多物体识别+定位多个物体，那把这个任务看做分类问题？</p>
+<p><img src="https://wx4.sinaimg.cn/large/00630Defly1g2lnprfz23j30fp0gytix.jpg" alt="image"></p>
+<p>看成分类问题有何不妥？</p>
+<ul>
+<li>你需要找很多位置， 给很多个不同大小的框</li>
+<li>你还需要对框内的图像分类</li>
+<li>当然， 如果你的GPU很强大， 恩， 那加油做吧…</li>
+</ul>
+<p><strong>边缘策略：</strong>想办法先找到可能包含内容的图框(<strong>候选框</strong>)，然后进行分类问题的识别。</p>
+<p><strong>方法</strong>：根据RGB值做区域融合。<strong>fast-CNN</strong>，共享图窗，从而加速候选框的形成。</p>
+<ul>
+<li><p><strong>R-CNN =&gt; fast-CNN =&gt; faster-RCNN</strong> 速度对比</p>
+<p><img src="https://wx3.sinaimg.cn/large/00630Defly1g2lnwlqz87j30rk090418" alt="image"></p>
+</li>
+</ul>
+<h4 id="3-2-2-R-CNN"><a href="#3-2-2-R-CNN" class="headerlink" title="3.2.2 R-CNN"></a>3.2.2 R-CNN</h4><p>R-CNN的简要步骤如下：</p>
+<ol>
+<li>输入测试图像。</li>
+<li>利用选择性搜索Selective Search算法在图像中从下到上提取2000个左右的可能包含物体的候选区域Region Proposal。</li>
+<li>因为取出的区域大小各自不同，所以需要将每个Region Proposal缩放（warp）成统一的227x227的大小并输入到CNN，将CNN的fc7层的输出作为特征。</li>
+<li>将每个Region Proposal提取到的CNN特征输入到SVM进行分类。</li>
+</ol>
+<h4 id="3-2-3-SPP-Net"><a href="#3-2-3-SPP-Net" class="headerlink" title="3.2.3 SPP-Net"></a>3.2.3 SPP-Net</h4><p>SPP：Spatial Pyramid Pooling（空间金字塔池化），SPP-Net是出自2015年发表在IEEE上的论文。</p>
+<p>众所周知，CNN一般都含有卷积部分和全连接部分，其中，卷积层不需要固定尺寸的图像，而全连接层是需要固定大小的输入。所以当全连接层面对各种尺寸的输入数据时，就需要对输入数据进行crop（crop就是从一个大图扣出网络输入大小的patch，比如227×227），或warp（把一个边界框bounding box(红框)的内容resize成227×227）等一系列操作以统一图片的尺寸大小，比如224<em>224（ImageNet）、32</em>32(LenNet)、96*96等。</p>
+<p><img src="https://julyedu-img-public.oss-cn-beijing.aliyuncs.com/Public/Image/Question/1525249316_603.png" alt=""></p>
+<p>所以才如你在上文中看到的，在R-CNN中，“因为取出的区域大小各自不同，所以需要将每个Region Proposal缩放（warp）成统一的227x227的大小并输入到CNN”。</p>
+<p>但warp/crop这种预处理，导致的问题要么被拉伸变形、要么物体不全，限制了识别精确度。没太明白？说句人话就是，一张16:9比例的图片你硬是要Resize成1:1的图片，你说图片失真不？</p>
+<p>SPP Net的作者Kaiming He等人逆向思考，既然由于全连接FC层的存在，普通的CNN需要通过固定输入图片的大小来使得全连接层的输入固定。那借鉴卷积层可以适应任何尺寸，为何不能在卷积层的最后加入某种结构，使得后面全连接层得到的输入变成固定的呢？</p>
+<p>这个“化腐朽为神奇”的结构就是spatial pyramid pooling layer。</p>
+<p>它的特点有两个:</p>
+<ol>
+<li><p><strong>结合空间金字塔方法实现CNNs的多尺度输入。</strong></p>
+<p>SPP Net的第一个贡献就是在最后一个卷积层后，接入了金字塔池化层，保证传到下一层全连接层的输入固定。</p>
+<p>换句话说，在普通的CNN机构中，输入图像的尺寸往往是固定的（比如224*224像素），输出则是一个固定维数的向量。SPP Net在普通的CNN结构中加入了ROI池化层（ROI Pooling），使得网络的输入图像可以是任意尺寸的，输出则不变，同样是一个固定维数的向量。</p>
+<p>简言之，CNN原本只能固定输入、固定输出，CNN加上SSP之后，便能任意输入、固定输出。神奇吧？</p>
+</li>
+<li><p><strong>只对原图提取一次卷积特征</strong></p>
+<p>在R-CNN中，每个候选框先resize到统一大小，然后分别作为CNN的输入，这样是很低效的。</p>
+<p>而SPP Net根据这个缺点做了优化：只对原图进行一次卷积计算，便得到整张图的卷积特征feature map，然后找到每个候选框在feature map上的映射patch，将此patch作为每个候选框的卷积特征输入到SPP layer和之后的层，完成特征提取工作。</p>
+</li>
+</ol>
+<p>如此这般，R-CNN要对每个区域计算卷积，而SPPNet只需要计算一次卷积，从而节省了大量的计算时间，比R-CNN有一百倍左右的提速。</p>
+<h4 id="3-2-4-Fast-R-CNN"><a href="#3-2-4-Fast-R-CNN" class="headerlink" title="3.2.4 Fast R-CNN"></a>3.2.4 Fast R-CNN</h4><p>SPP Net真是个好方法，R-CNN的进阶版Fast R-CNN就是在R-CNN的基础上采纳了SPP Net方法，对R-CNN作了改进，使得性能进一步提高。</p>
+<p>R-CNN有一些相当大的缺点（把这些缺点都改掉了，就成了Fast R-CNN）。</p>
+<p><strong>大缺点：</strong>由于每一个候选框都要独自经过CNN，这使得花费的时间非常多。</p>
+<p><strong>解决：</strong>共享卷积层，现在不是每一个候选框都当做输入进入CNN了，而是输入一张完整的图片，在第五个卷积层再得到每个候选框的特征。</p>
+<p>原来的方法：许多候选框（比如两千个）–&gt;CNN–&gt;得到每个候选框的特征–&gt;分类+回归</p>
+<p>现在的方法：一张完整图片–&gt;CNN–&gt;得到每张候选框的特征–&gt;分类+回归</p>
+<p>所以容易看见，Fast R-CNN相对于R-CNN的提速原因就在于：不过不像R-CNN把每个候选区域给深度网络提特征，而是整张图提一次特征，再把候选框映射到conv5上，而SPP只需要计算一次特征，剩下的只需要在conv5层上操作就可以了。</p>
+<p><strong>算法步骤：</strong></p>
+<ol>
+<li>在图像中确定约1000-2000个候选框 (使用选择性搜索)。</li>
+<li>对整张图片输进CNN，得到feature map。</li>
+<li>找到每个候选框在feature map上的映射patch，将此patch作为每个候选框的卷积特征输入到SPP layer和之后的层。</li>
+<li>对候选框中提取出的特征，使用分类器判别是否属于一个特定类。</li>
+<li>对于属于某一类别的候选框，用回归器进一步调整其位置。</li>
+</ol>
+<h4 id="3-2-5-Faster-R-CNN"><a href="#3-2-5-Faster-R-CNN" class="headerlink" title="3.2.5 Faster R-CNN"></a>3.2.5 Faster R-CNN</h4><p>Fast R-CNN存在的问题：存在瓶颈：选择性搜索，找出所有的候选框，这个也非常耗时。那我们能不能找出一个更加高效的方法来求出这些候选框呢？</p>
+<p>解决：加入一个提取边缘的神经网络，也就说找到候选框的工作也交给神经网络来做了。</p>
+<p>所以，rgbd在Fast R-CNN中引入Region Proposal Network(RPN)替代Selective Search，同时引入anchor box应对目标形状的变化问题（anchor就是位置和大小固定的box，可以理解成事先设置好的固定的proposal）。这就是Faster R-CNN。</p>
+<p><strong>算法步骤：</strong></p>
+<ol>
+<li>对整张图片输进CNN，得到feature map。</li>
+<li>卷积特征输入到RPN，得到候选框的特征信息。</li>
+<li>对候选框中提取出的特征，使用分类器判别是否属于一个特定类。</li>
+<li>对于属于某一类别的候选框，用回归器进一步调整其位置。</li>
+</ol>
+<h4 id="3-2-6-YOLO"><a href="#3-2-6-YOLO" class="headerlink" title="3.2.6 YOLO"></a>3.2.6 YOLO</h4><p>Faster R-CNN的方法目前是主流的目标检测方法，但是速度上并不能满足实时的要求。YOLO一类的方法慢慢显现出其重要性，这类方法使用了回归的思想，利用整张图作为网络的输入，直接在图像的多个位置上回归出这个位置的目标边框，以及目标所属的类别。</p>
+<p>我们直接看上面YOLO的目标检测的流程图：</p>
+<p><img src="https://julyedu-img-public.oss-cn-beijing.aliyuncs.com/Public/Image/Question/1525171091_647.jpg" alt=""></p>
+<ol>
+<li>给个一个输入图像，首先将图像划分成7*7的网格。</li>
+<li>对于每个网格，我们都预测2个边框（包括每个边框是目标的置信度以及每个边框区域在多个类别上的概率）。</li>
+<li>根据上一步可以预测出7<em>7</em>2个目标窗口，然后根据阈值去除可能性比较低的目标窗口，最后NMS去除冗余窗口即可。</li>
+</ol>
+<p><strong>小结：</strong>YOLO将目标检测任务转换成一个回归问题，大大加快了检测的速度，使得YOLO可以每秒处理45张图像。而且由于每个网络预测目标窗口时使用的是全图信息，使得false positive比例大幅降低（充分的上下文信息）。</p>
+<p>但是YOLO也存在问题：没有了Region Proposal机制，只使用7*7的网格回归会使得目标不能非常精准的定位，这也导致了YOLO的检测精度并不是很高。</p>
+<h4 id="3-2-7-SSD"><a href="#3-2-7-SSD" class="headerlink" title="3.2.7 SSD"></a>3.2.7 SSD</h4><p>SSD: Single Shot MultiBox Detector。上面分析了YOLO存在的问题，使用整图特征在7*7的粗糙网格内回归对目标的定位并不是很精准。那是不是可以结合region proposal的思想实现精准一些的定位？SSD结合YOLO的回归思想以及Faster R-CNN的anchor机制做到了这点。</p>
+<p><img src="https://julyedu-img-public.oss-cn-beijing.aliyuncs.com/Public/Image/Question/1525171268_230.jpg" alt=""></p>
+<p>上图是SSD的一个框架图，首先SSD获取目标位置和类别的方法跟YOLO一样，都是使用回归，但是YOLO预测某个位置使用的是全图的特征，SSD预测某个位置使用的是这个位置周围的特征（感觉更合理一些）。</p>
+<p>那么如何建立某个位置和其特征的对应关系呢？可能你已经想到了，使用Faster R-CNN的anchor机制。如SSD的框架图所示，假如某一层特征图(图b)大小是8*8，那么就使用3*3的滑窗提取每个位置的特征，然后这个特征回归得到目标的坐标信息和类别信息(图c)。</p>
+<p>不同于Faster R-CNN，这个anchor是在多个feature map上，这样可以利用多层的特征并且自然的达到多尺度（不同层的feature map 3*3滑窗感受野不同）。</p>
+<p>小结：SSD结合了YOLO中的回归思想和Faster R-CNN中的anchor机制，使用全图各个位置的多尺度区域特征进行回归，既保持了YOLO速度快的特性，也保证了窗口预测的跟Faster R-CNN一样比较精准。SSD在VOC2007上mAP可以达到72.1%，速度在GPU上达到58帧每秒。</p>
+<h3 id="3-3-语义-图像-分割"><a href="#3-3-语义-图像-分割" class="headerlink" title="3.3 语义(图像)分割"></a>3.3 语义(图像)分割</h3><p>识别图上pixel的类别，用全卷积网络。</p>
+<p><img src="https://ws3.sinaimg.cn/large/00630Defly1g2lo1v1001j30nq0j4wu9.jpg" alt="image"></p>
+<h2 id="4-代码实现CNN"><a href="#4-代码实现CNN" class="headerlink" title="4. 代码实现CNN"></a>4. 代码实现CNN</h2><p><a href="https://github.com/NLP-LOVE/ML-NLP/blob/master/Deep%20Learning/11.%20CNN/CNN.ipynb" target="_blank" rel="noopener">cifar10数据集分类–CNN</a></p>
+<p>【<a href="https://github.com/NLP-LOVE/ML-NLP" target="_blank" rel="noopener">机器学习通俗易懂系列文章</a>】</p>
+<p><img src="https://img-blog.csdnimg.cn/20190802102238788.png" alt="3.png"></p>
+<h2 id="5-参考文献"><a href="#5-参考文献" class="headerlink" title="5. 参考文献"></a>5. 参考文献</h2><ol>
+<li><a href="https://www.julyedu.com/question/big/kp_id/32/ques_id/2103" target="_blank" rel="noopener">基于深度学习的目标检测技术演进：R-CNN、Fast R-CNN、Faster R-CNN、YOLO、SSD</a></li>
+<li><a href="https://blog.csdn.net/v_july_v/article/details/51812459" target="_blank" rel="noopener">通俗理解卷积神经网络</a></li>
+</ol>
+<hr>
+<blockquote>
+<p>作者：<a href="https://github.com/NLP-LOVE/ML-NLP" target="_blank" rel="noopener">@mantchs</a></p>
+<p>GitHub：<a href="https://github.com/NLP-LOVE/ML-NLP" target="_blank" rel="noopener">https://github.com/NLP-LOVE/ML-NLP</a></p>
+<p>欢迎大家加入讨论！共同完善此项目！群号：【541954936】<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=863f915b9178560bd32ca07cd090a7d9e6f5f90fcff5667489697b1621cecdb3"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="NLP面试学习群" title="NLP面试学习群"></a></p>
+</blockquote>
+
+      </div>
+      
+      
+        <br>
+        
+
+
+  <section class='meta' id="footer-meta">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-12-25T13:50:02+08:00">
+  <a class='notlink'>
+    <i class="fas fa-clock" aria-hidden="true"></i>
+    <p>更新于 2019年12月25日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
+          
+          href="http://connect.qq.com/widget/shareqq/index.html?url=http://reverent-montalcini-17e4bf.netlify.com/2019/08/11/DL/CNN/&title=【深度学习】卷积神经网络(CNN) | mantch的博客&pics=https://gitee.com/kkweishe/images/raw/master/ML/2019-12-24_15-51-11.png&summary=上图中CNN要做的事情是：给定一张图片，是车还是马未知，是什么车也未知，现在需要模型判断这张图片里具体是一个什么东西，总之输出一个结果：如果是车 那是什么车。 这几个部分中，卷积计算层是CNN的核心。 在做输入的时候，需要把图片处理成同样大小的图片才能够进行处理。 TIPS:在训练集和测试…"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
+          
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://reverent-montalcini-17e4bf.netlify.com/2019/08/11/DL/CNN/&title=【深度学习】卷积神经网络(CNN) | mantch的博客&pics=https://gitee.com/kkweishe/images/raw/master/ML/2019-12-24_15-51-11.png&summary=上图中CNN要做的事情是：给定一张图片，是车还是马未知，是什么车也未知，现在需要模型判断这张图片里具体是一个什么东西，总之输出一个结果：如果是车 那是什么车。 这几个部分中，卷积计算层是CNN的核心。 在做输入的时候，需要把图片处理成同样大小的图片才能够进行处理。 TIPS:在训练集和测试…"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
+          
+          href="http://service.weibo.com/share/share.php?url=http://reverent-montalcini-17e4bf.netlify.com/2019/08/11/DL/CNN/&title=【深度学习】卷积神经网络(CNN) | mantch的博客&pics=https://gitee.com/kkweishe/images/raw/master/ML/2019-12-24_15-51-11.png&summary=上图中CNN要做的事情是：给定一张图片，是车还是马未知，是什么车也未知，现在需要模型判断这张图片里具体是一个什么东西，总之输出一个结果：如果是车 那是什么车。 这几个部分中，卷积计算层是CNN的核心。 在做输入的时候，需要把图片处理成同样大小的图片才能够进行处理。 TIPS:在训练集和测试…"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </section>
+
+
+      
+      
+          <div class="prev-next">
+              
+                  <section class="prev">
+                      <span class="art-item-left">
+                          <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
+                          <h4>
+                              <a href="/2019/08/15/DL/RNN/" rel="prev" title="【深度学习】循环神经网络(RNN)">
+                                
+                                    【深度学习】循环神经网络(RNN)
+                                
+                              </a>
+                          </h4>
+                          
+                      </span>
+                  </section>
+              
+              
+                  <section class="next">
+                      <span class="art-item-right" aria-hidden="true">
+                          <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                          <h4>
+                              <a href="/2019/08/04/DL/Neural%20Network/" rel="prev" title="【深度学习】神经网络">
+                                  
+                                      【深度学习】神经网络
+                                  
+                              </a>
+                          </h4>
+                          
+                      </span>
+                  </section>
+              
+          </div>
+      
+    </section>
+  </article>
+
+
+
+  <!-- 显示推荐文章和评论 -->
+
+
+
+  <article class="post white-box comments">
+    <section class="article typo">
+      <h4><i class="fas fa-comments fa-fw" aria-hidden="true"></i>&nbsp;评论</h4>
+      
+      
+      
+        <section id="comments">
+          <div id="gitalk-container"></div>
+        </section>
+      
+      
+    </section>
+  </article>
+
+
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+  <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX","TeX"],
+      linebreaks: { automatic:true },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: { autoNumber: "AMS" },
+      noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+      Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += (all[i].SourceElement().parentNode.className ? ' ' : '') + 'has-jax';
+    }
+  });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+
+  <script>
+    window.subData = {
+      title: '【深度学习】卷积神经网络(CNN)',
+      tools: true
+    }
+  </script>
+
+
+</div>
+<aside class='l_side'>
+  
+    
+    
+      
+      
+        
+          
+          
+            
+              <section class='widget author'>
+  <div class='content pure'>
+    
+      <div class='avatar'>
+        <img class='avatar' src='https://gitee.com/kkweishe/images/raw/master/ML/2019-12-24_16-7-39.png'/>
+      </div>
+    
+    
+      <div class='text'>
+        
+        
+        
+          <p><span id="jinrishici-sentence">mantch的博客</span></p>
+          <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+        
+      </div>
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="mailto:mantchs@163.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://github.com/NLP-LOVE"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+            
+              <section class='widget plain'>
+  
+<header class='pure'>
+  <div><i class="fas fa-file fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;AI-Area</div>
+  
+</header>
+
+  <div class='content pure'>
+    <p>微信公众号(最新文章分享)，请关注!<br><img src="https://gitee.com/kkweishe/images/raw/master/ML/2019-12-24_16-17-47.png" alt=""></p>
+
+  </div>
+</section>
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            
+              
+  <section class='widget toc-wrapper'>
+    
+<header class='pure'>
+  <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;本文目录</div>
+  
+    <!-- <div class='wrapper'><a class="s-toc rightBtn" rel="external nofollow noopener noreferrer" href="javascript:void(0)"><i class="fas fa-thumbtack fa-fw"></i></a></div> -->
+  
+</header>
+
+    <div class='content pure'>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-什么是CNN"><span class="toc-text">1. 什么是CNN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-输入层"><span class="toc-text">1.1 输入层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-卷积计算层-conv"><span class="toc-text">1.2 卷积计算层(conv)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-激励层"><span class="toc-text">1.3 激励层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-池化层"><span class="toc-text">1.4 池化层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-全连接层"><span class="toc-text">1.5 全连接层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-层次结构小结"><span class="toc-text">1.6 层次结构小结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-7-CNN优缺点"><span class="toc-text">1.7 CNN优缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-典型CNN发展历程"><span class="toc-text">2. 典型CNN发展历程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-图像相关任务"><span class="toc-text">3. 图像相关任务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-图像识别与定位"><span class="toc-text">3.1 图像识别与定位</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-1-思路1：识别-定位过程"><span class="toc-text">3.1.1 思路1：识别+定位过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-2-思路2：图窗-识别"><span class="toc-text">3.1.2 思路2：图窗+识别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-物体检测-object-detection"><span class="toc-text">3.2 物体检测(object detection)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-1-过程"><span class="toc-text">3.2.1 过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-2-R-CNN"><span class="toc-text">3.2.2 R-CNN</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-3-SPP-Net"><span class="toc-text">3.2.3 SPP-Net</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-4-Fast-R-CNN"><span class="toc-text">3.2.4 Fast R-CNN</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-5-Faster-R-CNN"><span class="toc-text">3.2.5 Faster R-CNN</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-6-YOLO"><span class="toc-text">3.2.6 YOLO</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-7-SSD"><span class="toc-text">3.2.7 SSD</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-语义-图像-分割"><span class="toc-text">3.3 语义(图像)分割</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-代码实现CNN"><span class="toc-text">4. 代码实现CNN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-参考文献"><span class="toc-text">5. 参考文献</span></a></li></ol>
+    </div>
+  </section>
+
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            
+              <section class='widget grid'>
+  
+<header class='pure'>
+  <div><i class="fas fa-map-signs fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;站内导航</div>
+  
+</header>
+
+  <div class='content pure'>
+    <ul class="grid navgation">
+      
+        <li><a class="flat-box" title="/" href="/"
+          
+          
+          id="home">
+          
+            <i class="fas fa-clock fa-fw" aria-hidden="true"></i>
+          
+          近期文章
+        </a></li>
+      
+        <li><a class="flat-box" title="/archives/" href="/archives/"
+          
+            rel="nofollow"
+          
+          
+          id="archives">
+          
+            <i class="fas fa-archive fa-fw" aria-hidden="true"></i>
+          
+          文章归档
+        </a></li>
+      
+        <li><a class="flat-box" title="/projects/mantch/" href="/projects/mantch/"
+          
+          
+          id="projectsmantch">
+          
+            <i class="fas fa-code-branch fa-fw" aria-hidden="true"></i>
+          
+          项目&资源
+        </a></li>
+      
+        <li><a class="flat-box" title="/friends/" href="/friends/"
+          
+            rel="nofollow"
+          
+          
+          id="friends">
+          
+            <i class="fas fa-link fa-fw" aria-hidden="true"></i>
+          
+          我的友链
+        </a></li>
+      
+        <li><a class="flat-box" title="https://xaoxuu.com/wiki/material-x/" href="https://xaoxuu.com/wiki/material-x/"
+          
+            rel="nofollow"
+          
+          
+          id="https:xaoxuu.comwikimaterial-x">
+          
+            <i class="fas fa-book fa-fw" aria-hidden="true"></i>
+          
+          主题文档
+        </a></li>
+      
+        <li><a class="flat-box" title="/about/mantch/" href="/about/mantch/"
+          
+            rel="nofollow"
+          
+          
+          id="aboutmantch">
+          
+            <i class="fas fa-info-circle fa-fw" aria-hidden="true"></i>
+          
+          关于小站
+        </a></li>
+      
+    </ul>
+  </div>
+</section>
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            
+              
+  <section class='widget category'>
+    
+<header class='pure'>
+  <div><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;文章分类</div>
+  
+    <a class="rightBtn"
+    
+      rel="nofollow"
+    
+    
+    href="/blog/categories/"
+    title="blog/categories/">
+    <i class="fas fa-expand-arrows-alt fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      <ul class="entry">
+        
+          <li><a class="flat-box" title="/categories/NLP/" href="/categories/NLP/"><div class='name'>NLP</div><div class='badge'>(11)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F/" href="/categories/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F/"><div class='name'>推荐系统</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"><div class='name'>机器学习</div><div class='badge'>(15)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><div class='name'>深度学习</div><div class='badge'>(8)</div></a></li>
+        
+      </ul>
+    </div>
+  </section>
+
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            
+              
+
+            
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+    
+
+  
+</aside>
+
+<footer id="footer" class="clearfix">
+  
+  
+    <div class="social-wrapper">
+      
+        
+          <a href="mailto:mantchs@163.com"
+            class="social fas fa-envelope flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://github.com/NLP-LOVE"
+            class="social fab fa-github flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+    </div>
+  
+  <br>
+  <div><p>博客内容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+  <div>
+    本站使用
+    <a href="https://xaoxuu.com/wiki/material-x/" target="_blank" class="codename">Material X</a>
+    作为主题
+    
+      ，
+      总访问量为
+      <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
+      次
+    
+    。
+  </div>
+</footer>
+<script>setLoadingBarProgress(80);</script>
+
+
+
+
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+    <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)'></a>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+
+  <script>
+    var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+    var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+    var ALGOLIA_API_KEY = "";
+    var ALGOLIA_APP_ID = "";
+    var ALGOLIA_INDEX_NAME = "";
+    var AZURE_SERVICE_NAME = "";
+    var AZURE_INDEX_NAME = "";
+    var AZURE_QUERY_KEY = "";
+    var BAIDU_API_ID = "";
+    var SEARCH_SERVICE = "hexo" || "hexo";
+    var ROOT = "/"||"/";
+    if(!ROOT.endsWith('/'))ROOT += '/';
+  </script>
+
+<script src="//instant.page/1.2.2" type="module" integrity="sha384-2xV8M5griQmzyiY3CDqh1dn4z3llDVqZDqzjzcY+jCBCk/a5fXJmuZ/40JJAPeoU"></script>
+
+
+  <script async src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.5/dist/scrollreveal.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      const $reveal = $('.reveal');
+      if ($reveal.length === 0) return;
+      const sr = ScrollReveal({ distance: 0 });
+      sr.reveal('.reveal');
+    });
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+  
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        if ('.cover') {
+          $('.cover').backstretch(
+          ["https://img.vim-cn.com/29/91197b04c13f512f734a76d4ac422d89dbe229.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        } else {
+          $.backstretch(
+          ["https://img.vim-cn.com/29/91197b04c13f512f734a76d4ac422d89dbe229.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: "9e843f5ca6489d3dafe8",
+      clientSecret: "4c4ecc0dc9d3f67c295c96945ada3ad65fe6d3d5",
+      repo: "blog-comment",
+      owner: "NLP-LOVE",
+      admin: "NLP-LOVE",
+      
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+      
+      distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+    gitalk.render('gitalk-container');
+  </script>
+
+
+
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+  
+<script src="/js/search.js"></script>
+
+
+
+
+
+<!-- 复制 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  let COPY_SUCCESS = "复制成功";
+  let COPY_FAILURE = "复制失败";
+  /*页面载入完成后，创建复制按钮*/
+  !function (e, t, a) {
+    /* code */
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '  <i class="fa fa-copy"></i><span>复制</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+
+      clipboard.on('success', function(e) {
+        //您可以加入成功提示
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+        success_prompt(COPY_SUCCESS);
+        e.clearSelection();
+      });
+      clipboard.on('error', function(e) {
+        //您可以加入失败提示
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+        fail_prompt(COPY_FAILURE);
+      });
+    }
+    initCopyCode();
+
+  }(window, document);
+
+  /**
+   * 弹出式提示框，默认1.5秒自动消失
+   * @param message 提示信息
+   * @param style 提示样式，有alert-success、alert-danger、alert-warning、alert-info
+   * @param time 消失时间
+   */
+  var prompt = function (message, style, time)
+  {
+      style = (style === undefined) ? 'alert-success' : style;
+      time = (time === undefined) ? 1500 : time*1000;
+      $('<div>')
+          .appendTo('body')
+          .addClass('alert ' + style)
+          .html(message)
+          .show()
+          .delay(time)
+          .fadeOut();
+  };
+
+  // 成功提示
+  var success_prompt = function(message, time)
+  {
+      prompt(message, 'alert-success', time);
+  };
+
+  // 失败提示
+  var fail_prompt = function(message, time)
+  {
+      prompt(message, 'alert-danger', time);
+  };
+
+  // 提醒
+  var warning_prompt = function(message, time)
+  {
+      prompt(message, 'alert-warning', time);
+  };
+
+  // 信息提示
+  var info_prompt = function(message, time)
+  {
+      prompt(message, 'alert-info', time);
+  };
+
+</script>
+
+
+<!-- fancybox -->
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  let LAZY_LOAD_IMAGE = "";
+  $(".article-entry").find("fancybox").find("img").each(function () {
+      var element = document.createElement("a");
+      $(element).attr("data-fancybox", "gallery");
+      $(element).attr("href", $(this).attr("src"));
+      /* 图片采用懒加载处理时,
+       * 一般图片标签内会有个属性名来存放图片的真实地址，比如 data-original,
+       * 那么此处将原本的属性名src替换为对应属性名data-original,
+       * 修改如下
+       */
+       if (LAZY_LOAD_IMAGE) {
+         $(element).attr("href", $(this).attr("data-original"));
+       }
+      $(this).wrap(element);
+  });
+</script>
+
+
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+</body>
+</html>
