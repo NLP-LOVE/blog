@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>【机器学习】线性回归</title>
+      <link href="/2019/07/28/ML/Linner%20Regression/"/>
+      <url>/2019/07/28/ML/Linner%20Regression/</url>
+      
+        <content type="html"><![CDATA[<p>线性回归对大量的观测数据进行处理，从而得到比较符合事物内部规律的数学表达式。也就是说寻找到数据与数据之间的规律所在，从而就可以模拟出结果，也就是对结果进行预测。解决的就是通过已知的数据得到未知的结果。例如：对房价的预测、判断信用评价、电影票房预估等。</p><a id="more"></a><h2 id="1-什么是线性回归"><a href="#1-什么是线性回归" class="headerlink" title="1.什么是线性回归"></a>1.什么是线性回归</h2><ul><li>线性：两个变量之间的关系<strong>是</strong>一次函数关系的——图象<strong>是直线</strong>，叫做线性。</li><li>非线性：两个变量之间的关系<strong>不是</strong>一次函数关系的——图象<strong>不是直线</strong>，叫做非线性。</li><li>回归：人们在测量事物的时候因为客观条件所限，求得的都是测量值，而不是事物真实的值，为了能够得到真实值，无限次的进行测量，最后通过这些测量数据计算<strong>回归到真实值</strong>，这就是回归的由来。</li></ul><h2 id="2-能够解决什么样的问题"><a href="#2-能够解决什么样的问题" class="headerlink" title="2. 能够解决什么样的问题"></a>2. 能够解决什么样的问题</h2><p>对大量的观测数据进行处理，从而得到比较符合事物内部规律的数学表达式。也就是说寻找到数据与数据之间的规律所在，从而就可以模拟出结果，也就是对结果进行预测。解决的就是通过已知的数据得到未知的结果。例如：对房价的预测、判断信用评价、电影票房预估等。</p><h2 id="3-一般表达式是什么"><a href="#3-一般表达式是什么" class="headerlink" title="3. 一般表达式是什么"></a>3. 一般表达式是什么</h2><p>$$Y=wx+b$$</p><p>w叫做x的系数，b叫做偏置项。</p><h2 id="4-如何计算"><a href="#4-如何计算" class="headerlink" title="4. 如何计算"></a>4. 如何计算</h2><h3 id="4-1-Loss-Function–MSE"><a href="#4-1-Loss-Function–MSE" class="headerlink" title="4.1 Loss Function–MSE"></a>4.1 Loss Function–MSE</h3><p>$$J=\frac{1}{2m}\sum^{i=1}_{m}(y^{‘}-y)^2$$</p><p>利用<strong>梯度下降法</strong>找到最小值点，也就是最小误差，最后把 w 和 b 给求出来。</p><h2 id="5-过拟合、欠拟合如何解决"><a href="#5-过拟合、欠拟合如何解决" class="headerlink" title="5. 过拟合、欠拟合如何解决"></a>5. 过拟合、欠拟合如何解决</h2><p>使用正则化项，也就是给loss function加上一个参数项，正则化项有<strong>L1正则化、L2正则化、ElasticNet</strong>。加入这个正则化项好处：</p><ul><li>控制参数幅度，不让模型“无法无天”。</li><li>限制参数搜索空间</li><li>解决欠拟合与过拟合的问题。</li></ul><h3 id="5-1-什么是L2正则化-岭回归"><a href="#5-1-什么是L2正则化-岭回归" class="headerlink" title="5.1 什么是L2正则化(岭回归)"></a>5.1 什么是L2正则化(岭回归)</h3><p>方程：</p><p>$$J=J_0+\lambda\sum_{w}w^2$$</p><p>$J_0$ 表示上面的 loss function ，在loss function的基础上加入w参数的平方和乘以 $\lambda$ ，假设：</p><p>$$L=\lambda({w_1}^2+{w_2}^2)$$</p><p>回忆以前学过的单位元的方程：</p><p>$$x^2+y^2=1$$</p><p>正和L2正则化项一样，此时我们的任务变成在L约束下求出J取最小值的解。求解J0的过程可以画出等值线。同时L2正则化的函数L也可以在w1w2的二维平面上画出来。如下图：</p><p><img src="https://wx4.sinaimg.cn/large/00630Defgy1g4ns9qha1nj308u089aav.jpg" alt="image"></p><p>L表示为图中的黑色圆形，随着梯度下降法的不断逼近，与圆第一次产生交点，而这个交点很难出现在坐标轴上。这就说明了L2正则化不容易得到稀疏矩阵，同时为了求出损失函数的最小值，使得w1和w2无限接近于0，达到防止过拟合的问题。</p><h3 id="5-2-什么场景下用L2正则化"><a href="#5-2-什么场景下用L2正则化" class="headerlink" title="5.2 什么场景下用L2正则化"></a>5.2 什么场景下用L2正则化</h3><p>只要数据线性相关，用LinearRegression拟合的不是很好，<strong>需要正则化</strong>，可以考虑使用岭回归(L2), 如何输入特征的维度很高,而且是稀疏线性关系的话， 岭回归就不太合适,考虑使用Lasso回归。</p><h3 id="5-3-什么是L1正则化-Lasso回归"><a href="#5-3-什么是L1正则化-Lasso回归" class="headerlink" title="5.3 什么是L1正则化(Lasso回归)"></a>5.3 什么是L1正则化(Lasso回归)</h3><p>L1正则化与L2正则化的区别在于惩罚项的不同：</p><p>$$J=J_0+\lambda(|w_1|+|w_2|)$$</p><p>求解J0的过程可以画出等值线。同时L1正则化的函数也可以在w1w2的二维平面上画出来。如下图：</p><p><img src="https://ws2.sinaimg.cn/large/00630Defgy1g4nse7rf9xj308u089gme.jpg" alt="image"></p><p>惩罚项表示为图中的黑色棱形，随着梯度下降法的不断逼近，与棱形第一次产生交点，而这个交点很容易出现在坐标轴上。<strong>这就说明了L1正则化容易得到稀疏矩阵。</strong></p><h3 id="5-4-什么场景下使用L1正则化"><a href="#5-4-什么场景下使用L1正则化" class="headerlink" title="5.4 什么场景下使用L1正则化"></a>5.4 什么场景下使用L1正则化</h3><p><strong>L1正则化(Lasso回归)可以使得一些特征的系数变小,甚至还使一些绝对值较小的系数直接变为0</strong>，从而增强模型的泛化能力 。对于高的特征数据,尤其是线性关系是稀疏的，就采用L1正则化(Lasso回归),或者是要在一堆特征里面找出主要的特征，那么L1正则化(Lasso回归)更是首选了。</p><h3 id="5-5-什么是ElasticNet回归"><a href="#5-5-什么是ElasticNet回归" class="headerlink" title="5.5 什么是ElasticNet回归"></a>5.5 什么是ElasticNet回归</h3><p><strong>ElasticNet综合了L1正则化项和L2正则化项</strong>，以下是它的公式：</p><p>$$min(\frac{1}{2m}[\sum_{i=1}^{m}({y_i}^{‘}-y_i)^2+\lambda\sum_{j=1}^{n}\theta_j^2]+\lambda\sum_{j=1}^{n}|\theta|$$</p><h3 id="5-6-ElasticNet回归的使用场景"><a href="#5-6-ElasticNet回归的使用场景" class="headerlink" title="5.6  ElasticNet回归的使用场景"></a>5.6  ElasticNet回归的使用场景</h3><p>ElasticNet在我们发现用Lasso回归太过(太多特征被稀疏为0),而岭回归也正则化的不够(回归系数衰减太慢)的时候，可以考虑使用ElasticNet回归来综合，得到比较好的结果。</p><h2 id="6-线性回归要求因变量服从正态分布？"><a href="#6-线性回归要求因变量服从正态分布？" class="headerlink" title="6. 线性回归要求因变量服从正态分布？"></a>6. 线性回归要求因变量服从正态分布？</h2><p>我们假设线性回归的噪声服从均值为0的正态分布。 当噪声符合正态分布N(0,delta^2)时，因变量则符合正态分布N(ax(i)+b,delta^2)，其中预测函数y=ax(i)+b。这个结论可以由正态分布的概率密度函数得到。也就是说当噪声符合正态分布时，其因变量必然也符合正态分布。 </p><p>在用线性回归模型拟合数据之前，首先要求数据应符合或近似符合正态分布，否则得到的拟合函数不正确。</p><h2 id="7-代码实现"><a href="#7-代码实现" class="headerlink" title="7. 代码实现"></a>7. 代码实现</h2><p>GitHub：<a href="https://github.com/NLP-LOVE/ML-NLP/tree/master/Machine%20Learning/Liner%20Regression/demo" target="_blank" rel="noopener">房价预测</a></p><h2 id="8-什么叫广义线性模型"><a href="#8-什么叫广义线性模型" class="headerlink" title="8. 什么叫广义线性模型"></a>8. 什么叫广义线性模型</h2><p>广义线性模型相对于经典的线性模型(y=wx+b)，核心在于引入了连接函数g(.)，形式变为：y=g−1(wx+b)。</p><hr><blockquote><p>作者：<a href="https://github.com/NLP-LOVE/ML-NLP" target="_blank" rel="noopener">@mantchs</a></p><p>GitHub：<a href="https://github.com/NLP-LOVE/ML-NLP" target="_blank" rel="noopener">https://github.com/NLP-LOVE/ML-NLP</a></p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 机器学习 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+  
+  
+</search>
